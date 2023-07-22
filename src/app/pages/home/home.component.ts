@@ -10,9 +10,5 @@ export class HomeComponent {
 
   constructor(private router: Router) {}
 
-  onLogout() {
-    localStorage.clear();
-    this.router.navigate(["entry"]);
-  }
 
 }
