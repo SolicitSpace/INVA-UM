@@ -14,6 +14,8 @@ import { CreateNewWidgetComponent } from './components/create-new-widget/create-
 import { CountdownWidgetComponent } from './components/countdown-widget/countdown-widget.component';
 import { CountupWidgetComponent } from './components/countup-widget/countup-widget.component';
 import { LastPerformedOnWidgetComponent } from './components/last-performed-on-widget/last-performed-on-widget.component';
+import { SuperscriptPipe } from './pipes/superscript.pipe';
+import { LimitDecimalsPipe } from './pipes/limit-decimals.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { LastPerformedOnWidgetComponent } from './components/last-performed-on-w
     CountdownWidgetComponent,
     CountupWidgetComponent,
     LastPerformedOnWidgetComponent,
+    SuperscriptPipe,
+    LimitDecimalsPipe,
   ],
   imports: [
     BrowserModule,

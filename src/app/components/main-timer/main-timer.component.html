@@ -1,1 +1,36 @@
-<p>main-timer works!</p>
+<div class="main-timer-container">
+    <div class="complete-date-container">
+        <p [innerHTML]="momentRef().format('dddd, Do MMMM, YYYY') | superscript"></p>
+        <p>{{ momentRef().format("h:mm:ss a") }}</p>
+    </div>
+
+    <div class="graphicals-container">
+        <div class="year-graphical-container graphical-container">
+            <div class="graphical">
+                <div class="progress" [ngStyle]="{'width.%': getPercOf('year')}"></div>
+            </div>
+            <div class="labels-container">
+                <p>{{momentRef().format("YYYY")}}</p>
+                <p #phone>{{ getPercOf('year') | limitDecimals : 5 }} %</p>
+            </div>
+        </div>
+        <div class="month-graphical-container graphical-container">
+            <div class="graphical">
+                <div class="progress" [ngStyle]="{'width.%': getPercOf('month')}"></div>
+            </div>
+            <div class="labels-container">
+                <p>{{momentRef().format("MMMM")}}</p>
+                <p>{{ getPercOf('month') | limitDecimals : 4 }}%</p>
+            </div>
+        </div>
+        <div class="day-graphical-container graphical-container">
+            <div class="graphical">
+                <div class="progress" [ngStyle]="{'width.%': getPercOf('day')}"></div>
+            </div>
+            <div class="labels-container">
+                <p [innerHTML]="momentRef().format('dddd, Do') | superscript"></p>
+                <p>{{ getPercOf('day') | limitDecimals : 3 }}%</p>
+            </div>
+        </div>
+    </div>
+</div>

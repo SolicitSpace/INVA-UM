@@ -1,0 +1,44 @@
+.main-timer-container {
+  position: relative;
+  border: solid;
+
+  .complete-date-container {
+    position: relative;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .graphicals-container {
+    position: relative;
+    border: solid;
+    margin: 2% 0.5%;
+
+    .graphical-container {
+      position: relative;
+      //   border: solid;
+      margin: 1.5% 1.5%;
+
+      .graphical {
+        position: relative;
+        border: solid red;
+        height: 6px;
+
+        .progress {
+          position: relative;
+          background-color: blue;
+          width: 0%;
+          height: 100%;
+          transition: all 0.25s ease-in;
+        }
+      }
+      .labels-container {
+        display: flex;
+        justify-content: space-between;
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
