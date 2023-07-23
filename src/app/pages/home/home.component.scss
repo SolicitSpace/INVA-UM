@@ -1,0 +1,11 @@
+.main-timer-container {
+  position: relative;
+  margin: 1% 0;
+}
+.widget-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5% 0.5%;
+  margin: 1% 0;
+}

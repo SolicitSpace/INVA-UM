@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class LimitDecimalsPipe implements PipeTransform {
 
-  transform(value: number, ...args: number[]): unknown {
-    return value.toFixed(args[0]);
+  transform(value: number, numPlaces: number): unknown {
+    return value.toFixed(numPlaces);
   }
 
 }

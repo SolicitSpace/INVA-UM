@@ -1,0 +1,38 @@
+.countdown-container {
+  display: flex;
+  flex-direction: column;
+  border: solid;
+  padding: 3% 2%;
+
+  .timer-container {
+    position: relative;
+    text-align: center;
+
+    p {
+      margin: 2% 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      //   border: solid;
+
+      span {
+        font-size: 0.75rem;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .div-line {
+    position: relative;
+    border: solid 1px;
+    // width: 100%;
+  }
+
+  .txt-container {
+    // border: solid;
+
+    p {
+      margin: 2% 0;
+      font-size: 1.1rem;
+    }
+  }
+}
