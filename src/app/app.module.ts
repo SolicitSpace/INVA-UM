@@ -16,6 +16,7 @@ import { CountupWidgetComponent } from './components/countup-widget/countup-widg
 import { LastPerformedOnWidgetComponent } from './components/last-performed-on-widget/last-performed-on-widget.component';
 import { SuperscriptPipe } from './pipes/superscript.pipe';
 import { LimitDecimalsPipe } from './pipes/limit-decimals.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,9 @@ import { LimitDecimalsPipe } from './pipes/limit-decimals.pipe';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule     
   ],
   providers: [],
   bootstrap: [AppComponent]

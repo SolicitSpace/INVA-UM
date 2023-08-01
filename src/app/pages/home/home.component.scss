@@ -5,7 +5,14 @@
 .widget-container {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 5% 0.5%;
-  margin: 1% 0;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1vmin;
+  margin: 4% 0;
+//   height: 60vh;
+
+  .row-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1vmin;
+  }
 }

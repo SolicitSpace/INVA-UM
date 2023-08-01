@@ -1,0 +1,31 @@
+form {
+  .field-container {
+    position: relative;
+    margin: 1rem 1rem;
+    // border: solid;
+    label {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    input {
+      margin: 0.25rem 0;
+      font-size: 1.2rem;
+      width: 100%;
+    }
+    select {
+      margin: 0.25rem 0;
+      font-size: 1.2rem;
+      width: 100%;
+    }
+  }
+
+  .btns-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 1rem;
+
+    button {
+      font-size: 1.2rem;
+    }
+  }
+}

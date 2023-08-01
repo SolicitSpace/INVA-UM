@@ -10,5 +10,7 @@ export class HomeComponent {
 
   constructor(private router: Router) {}
 
-
+  openWidgetCreator() {
+    this.router.navigate(['create-new']);
+  }
 }

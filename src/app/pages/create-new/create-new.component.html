@@ -1,1 +1,31 @@
-<p>create-new works!</p>
+<app-header-bar></app-header-bar>
+
+<form [formGroup]="widgetFormGroup">
+
+    <div class="field-container">
+        <label for="widget-type-select">Widget Type</label><br />
+        <select name="widget-type-select" id="widget-type-select" formControlName="widgetType">
+            <option value="">Select a type</option>
+            <option *ngFor="let type of widgetTypeList$ | async;" [value]="type.id">{{ type.value }}</option>
+
+        </select>
+    </div>
+
+    <div class="field-container" *ngIf="widgetFormGroup.value.widgetType !== ''">
+        <label for="detail-input">Enter Detail(s)</label><br />
+        <input type="text" name="detail-input" id="detail-input"
+            placeholder="eg. name, one-line desc or any sort of point" formControlName="detail">
+    </div>
+
+    <!-- Only to be shown when Countdown is selected -->
+    <div class="field-container" *ngIf="widgetFormGroup.value.widgetType === '1'">
+        <label for="countdown-datepicker">Pick target date</label><br />
+        <input type="date" id="countdown-datepicker" name="countdown-datepicker" formControlName="targetDate">
+    </div>
+
+
+    <div class="btns-container">
+        <button type="button" (click)="cancelAndBack()">Leave</button>
+        <button type="button" (click)="createWidget()" [disabled]="">OK Create</button>
+    </div>
+</form>

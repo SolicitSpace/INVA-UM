@@ -1,21 +1,44 @@
 <app-header-bar></app-header-bar>
 
 <div class="main-timer-container">
-
     <app-main-timer></app-main-timer>
 </div>
 
 <div class="widget-container">
-    <app-countdown-widget></app-countdown-widget>
-    <app-countdown-widget></app-countdown-widget>
-    <app-countup-widget></app-countup-widget>
-    <app-last-performed-on-widget></app-last-performed-on-widget>
-    <app-countdown-widget></app-countdown-widget>
-    <app-countup-widget></app-countup-widget>
-    <app-countdown-widget></app-countdown-widget>
-    <app-countup-widget></app-countup-widget>
-    <app-countdown-widget></app-countdown-widget>
-    <app-countup-widget></app-countup-widget>
-    <app-last-performed-on-widget></app-last-performed-on-widget>
-    <app-create-new-widget></app-create-new-widget>
+
+    <div class="row-container">
+        <app-countdown-widget></app-countdown-widget>
+        <app-countdown-widget></app-countdown-widget>
+        <app-countup-widget></app-countup-widget>
+        <app-last-performed-on-widget></app-last-performed-on-widget>
+    </div>
+    <!-- <div class="row-container">
+        <app-countup-widget></app-countup-widget>
+        <app-countdown-widget></app-countdown-widget>
+        <app-countup-widget></app-countup-widget>
+        <app-countdown-widget></app-countdown-widget>
+    </div>
+    <div class="row-container">
+        <app-countup-widget></app-countup-widget>
+        <app-last-performed-on-widget></app-last-performed-on-widget>
+        <app-countup-widget></app-countup-widget>
+        <app-countdown-widget></app-countdown-widget>
+    </div>
+    <div class="row-container">
+        <app-countdown-widget></app-countdown-widget>
+        <app-last-performed-on-widget></app-last-performed-on-widget>
+        <app-countup-widget></app-countup-widget>
+        <app-countdown-widget></app-countdown-widget>
+    </div> -->
+    <div class="row-container">
+        <app-countup-widget></app-countup-widget>
+        <app-countdown-widget></app-countdown-widget>
+        <app-countup-widget></app-countup-widget>
+        <app-create-new-widget (click)="openWidgetCreator()"></app-create-new-widget>
+    </div>
+
+
+
+
+
 </div>
