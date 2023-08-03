@@ -6,12 +6,12 @@
 
 <div class="widget-container">
 
-    <div class="row-container">
+    <!-- <div class="row-container">
         <app-countdown-widget></app-countdown-widget>
         <app-countdown-widget></app-countdown-widget>
         <app-countup-widget></app-countup-widget>
         <app-last-performed-on-widget></app-last-performed-on-widget>
-    </div>
+    </div> -->
     <!-- <div class="row-container">
         <app-countup-widget></app-countup-widget>
         <app-countdown-widget></app-countdown-widget>
@@ -31,9 +31,11 @@
         <app-countdown-widget></app-countdown-widget>
     </div> -->
     <div class="row-container">
-        <app-countup-widget></app-countup-widget>
-        <app-countdown-widget></app-countdown-widget>
-        <app-countup-widget></app-countup-widget>
+        <ng-container *ngFor="let widget of ongoingWidgetList">
+            <app-countdown-widget *ngIf="widget.type == 1"></app-countdown-widget>
+            <app-countup-widget *ngIf="widget.type == 2"></app-countup-widget>
+            <app-last-performed-on-widget *ngIf="widget.type == 3"></app-last-performed-on-widget>
+        </ng-container>
         <app-create-new-widget (click)="openWidgetCreator()"></app-create-new-widget>
     </div>
 

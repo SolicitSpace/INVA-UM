@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, liveQuery } from 'dexie';
-import { db, WidgetDataM, WidgetTypeM } from '../../data/db';
+import { db, WidgetTypeM } from '../../data/db';
 import * as moment from 'moment';
 
 @Component({
@@ -16,11 +16,6 @@ import * as moment from 'moment';
   styleUrls: ['./create-new.component.scss'],
 })
 export class CreateNewComponent {
-  // contains complete data of created widgets
-  widgetDataList$: Observable<WidgetDataM[]> = liveQuery(() =>
-    db.widgetData.toArray()
-  );
-
   // contains only the types of widgets
   widgetTypeList$: Observable<WidgetTypeM[]> = liveQuery(() =>
     db.widgetType.toArray()
@@ -38,11 +33,13 @@ export class CreateNewComponent {
   );
 
   customValidator(formGroup: FormGroup): ValidationErrors | null {
+    if (!formGroup.value.detail) return null;
     if (formGroup.value.detail.trim() == '')
       return { detail_error: 'Detail cannot be empty' };
 
+    // For countdown
     if (
-      formGroup.value.widgetType == 'countdown' &&
+      formGroup.value.widgetType == 1 &&
       formGroup.value.targetDate.trim() == ''
     )
       return {
@@ -62,20 +59,10 @@ export class CreateNewComponent {
 
   async createWidget() {
     //
-    console.log(this.widgetFormGroup.value);
-
-    // get the widget type
-    // this.widgetFormGroup.value.widgetType
-
-    this.widgetDataList$.subscribe((data) => {
-      console.log(data);
-    });
-
-    // console.log("List so far...", this.widgetDataList$.getValue.);
-
+    console.log(this.widgetFormGroup);
     const widgetId = await db.widgetData
       .add({
-        widgetType: this.widgetFormGroup.value.widgetType,
+        type: parseInt(this.widgetFormGroup.value.widgetType),
         detail: this.widgetFormGroup.value.detail,
         target_date: this.widgetFormGroup.value.targetDate,
         status: 1, // marking status as ongoing
@@ -89,5 +76,11 @@ export class CreateNewComponent {
     alert(
       `Widget was created successfully. \nYou've created ${widgetId} widget till now. \nKeep it up!`
     );
+
+    this.widgetFormGroup.reset({ widgetType: '', detail: '', targetDate: '' });
+  }
+
+  isFormInvalid(): boolean {
+    return this.widgetFormGroup.status==='INVALID';
   }
 }

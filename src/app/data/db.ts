@@ -10,7 +10,7 @@ export interface WidgetStatusM {
 }
 export interface WidgetDataM {
   id?: number;
-  widgetType?: number;
+  type?: number;
   detail: string;
   target_date?: string;
   status: number;

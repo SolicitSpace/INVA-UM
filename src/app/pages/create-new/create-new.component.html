@@ -5,7 +5,7 @@
     <div class="field-container">
         <label for="widget-type-select">Widget Type</label><br />
         <select name="widget-type-select" id="widget-type-select" formControlName="widgetType">
-            <option value="">Select a type</option>
+            <option value="" selected>Select a type</option>
             <option *ngFor="let type of widgetTypeList$ | async;" [value]="type.id">{{ type.value }}</option>
 
         </select>
@@ -26,6 +26,7 @@
 
     <div class="btns-container">
         <button type="button" (click)="cancelAndBack()">Leave</button>
-        <button type="button" (click)="createWidget()" [disabled]="">OK Create</button>
+        <button type="button" (click)="createWidget()" [disabled]="isFormInvalid()">OK
+            Create</button>
     </div>
 </form>
