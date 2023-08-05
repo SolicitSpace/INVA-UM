@@ -27,26 +27,6 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.ongoingWidgetList = [
-      {
-          "type": 2,
-          "detail": "Teast",
-          "target_date": "",
-          "status": 1,
-          "created_on": "2023-08-03T08:42:50+05:30",
-          "last_edited_on": "2023-08-03T08:42:50+05:30",
-          "id": 1
-      },
-      {
-          "type": 3,
-          "detail": "Checjkk",
-          "target_date": "",
-          "status": 1,
-          "created_on": "2023-08-03T08:42:58+05:30",
-          "last_edited_on": "2023-08-03T08:42:58+05:30",
-          "id": 2
-      }
-  ]
 
     this.widgetDataList$.subscribe((res) => {
       this.ongoingWidgetList = _.filter(res, { status: 1 });

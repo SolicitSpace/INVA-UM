@@ -1,10 +1,14 @@
 <div class="lpo-container">
     <div class="timer-container">
-        <p>24 days <span>since</span></p>
-        
+        <p *ngIf="lastPerformedOn; else notPerformedYet">
+            {{ lastPerformedOn }} <span>since</span>
+        </p>
+        <ng-template #notPerformedYet>
+            <p>Not Performed yet</p>
+        </ng-template>
     </div>
     <div class="div-line"></div>
     <div class="txt-container">
-        <p>Proper MT</p>
+        <p>{{ detail }}</p>
     </div>
 </div>

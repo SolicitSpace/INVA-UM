@@ -10,10 +10,11 @@ export interface WidgetStatusM {
 }
 export interface WidgetDataM {
   id?: number;
-  type?: number;
+  type: number;
   detail: string;
   target_date?: string;
   status: number;
+  performed_on?: string[];
   created_on: string;
   last_edited_on: string;
 }
