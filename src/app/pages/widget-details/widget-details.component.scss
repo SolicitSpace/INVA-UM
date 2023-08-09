@@ -1,0 +1,17 @@
+.details-container {
+
+    .label-container {
+        margin: 1% 0;
+
+        p:nth-child(1) {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        p:nth-child(2) {
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin: 0;
+        }
+    }
+}

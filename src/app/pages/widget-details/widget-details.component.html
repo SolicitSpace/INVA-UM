@@ -1,7 +1,26 @@
-<p>Widget Details</p>
-<p>Name: <span>{{widgetData.detail}}</span></p>
-<p>-: <span>{{widgetData.created_on}}</span></p>
-<p>-: <span>{{widgetData.last_edited_on}}</span></p>
-<p>Status: <span>{{statusVal}}</span></p>
-<p>target date: <span>{{widgetData.target_date}}</span></p>
-<p>type: <span>{{typeVal}}</span></p>
+<h1>Widget Details</h1>
+
+<div class="details-container">
+    <div class="label-container">
+        <p>Name: </p>
+        <p>{{ widgetData.detail }}</p>
+    </div>
+    <div class="label-container">
+        <p>Type: </p>
+        <p>{{ typeVal }}</p>
+    </div>
+    <div class="label-container" *ngIf="widgetData.type==1">
+        <p>Target Date: </p>
+        <p>{{ widgetData.target_date }}</p>
+    </div>
+    <div class="label-container">
+        <p>Status: </p>
+        <p>{{ statusVal }}</p>
+    </div>
+    <div class="label-container">
+        <p>Created On: </p>
+        <p>{{ widgetData.created_on }}</p>
+    </div>
+
+
+</div>
