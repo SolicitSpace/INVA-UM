@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  openWidgetCreator() {
-    this.router.navigate(['create-new']);
-  }
+  
+  
 }

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateNewComponent } from './pages/create-new/create-new.component';
 import { HomeComponent } from './pages/home/home.component';
 import { EntryComponent } from './pages/entry/entry.component';
+import { WidgetDetailsComponent } from './pages/widget-details/widget-details.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: "create-new",   // Need to try this
     component: CreateNewComponent
+  },
+  {
+    path: "widget-details",   // Need to try this
+    component: WidgetDetailsComponent
   },
 
 ];

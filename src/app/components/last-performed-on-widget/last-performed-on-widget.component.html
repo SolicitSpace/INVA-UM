@@ -1,4 +1,4 @@
-<div class="lpo-container">
+<div class="lpo-container" (click)="openWidgetDetails()">
     <div class="timer-container">
         <p *ngIf="lastPerformedOn; else notPerformedYet">
             {{ lastPerformedOn }} <span>since</span>

@@ -6,7 +6,7 @@ export interface WidgetTypeM {
 }
 export interface WidgetStatusM {
   id?: number;
-  status: string;
+  value: string;
 }
 export interface WidgetDataM {
   id?: number;
@@ -48,16 +48,16 @@ export class AppDB extends Dexie {
   async generateWidgetStatusTable() {
     await db.widgetStatus.bulkAdd([
       {
-        status: 'Ongoing',
+        value: 'Ongoing',
       },
       {
-        status: 'Completed',
+        value: 'Completed',
       },
       {
-        status: 'Stopped',
+        value: 'Stopped',
       },
       {
-        status: 'Removed',
+        value: 'Removed',
       },
     ]);
   }

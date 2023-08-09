@@ -17,6 +17,7 @@ import { LastPerformedOnWidgetComponent } from './components/last-performed-on-w
 import { SuperscriptPipe } from './pipes/superscript.pipe';
 import { LimitDecimalsPipe } from './pipes/limit-decimals.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { WidgetDetailsComponent } from './pages/widget-details/widget-details.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LastPerformedOnWidgetComponent,
     SuperscriptPipe,
     LimitDecimalsPipe,
+    WidgetDetailsComponent,
   ],
   imports: [
     BrowserModule,
