@@ -16,6 +16,7 @@ export class WidgetDetailsComponent implements OnInit {
 
   statusVal: string = 'NA';
   typeVal: string = 'NA';
+  timeRemaining: string = 'NA';
 
   constructor(
     private selectedWidgetService: SelectedWidgetService,
@@ -28,6 +29,40 @@ export class WidgetDetailsComponent implements OnInit {
 
     this.setValueForStatus();
     this.setValueForType();
+
+    if (this.widgetData.type == 1) {
+      this.timeRemaining = this.setTimeRemaining()
+      console.log(this.setTimeRemaining());
+      // this.timeRemaining = Math.ceil(moment.duration(val).asDays());
+    }
+  }
+
+  setTimeRemaining() {
+    const timeArr = [];
+    const val = moment(this.widgetData.target_date, 'YYYY-MM-DD').diff(
+      moment()
+    );
+
+    const year = moment.duration(val).years();
+    timeArr.push(year > 0 ? (year > 1 ? year + ' years' : year + ' year') : '');
+
+    const month = moment.duration(val).months();
+    timeArr.push(
+      month > 0 ? (month > 1 ? month + ' months' : month + ' month') : ''
+    );
+
+    const day = moment.duration(val).days();
+    timeArr.push(day > 0 ? (day > 1 ? day + ' days' : day + ' day') : '');
+
+    const hour = moment.duration(val).hours();
+    timeArr.push(hour > 0 ? (hour > 1 ? hour + ' hours' : hour + ' hour') : '');
+
+    const minute = moment.duration(val).minutes();
+    timeArr.push(
+      minute > 0 ? (minute > 1 ? minute + ' minutes' : minute + ' minute') : ''
+    );
+
+    return timeArr.join(' ').trim();
   }
 
   async setValueForStatus() {
