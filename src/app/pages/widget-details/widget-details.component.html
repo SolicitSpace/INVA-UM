@@ -12,7 +12,7 @@
     <ng-container *ngIf="widgetData.type==1">
         <div class="label-container">
             <p>Target Date: </p>
-            <p>{{ widgetData.target_date }}</p>
+            <p>{{ targetDate }}</p>
         </div>
         <div class="label-container">
             <p>Time Remaining: </p>
@@ -25,11 +25,11 @@
     </div>
     <div class="label-container">
         <p>Created On: </p>
-        <p>{{ widgetData.created_on }}</p>
+        <p>{{ createdOn }}</p>
     </div>
     <div class="label-container">
         <p>Calendar: </p>
-        <app-calendar></app-calendar>
+        <app-calendar [events]="calendarEvt"></app-calendar>
     </div>
 
 
