@@ -31,9 +31,7 @@ export class WidgetDetailsComponent implements OnInit {
     this.setValueForType();
 
     if (this.widgetData.type == 1) {
-      this.timeRemaining = this.setTimeRemaining()
-      console.log(this.setTimeRemaining());
-      // this.timeRemaining = Math.ceil(moment.duration(val).asDays());
+      this.timeRemaining = this.setTimeRemaining();
     }
   }
 
@@ -86,4 +84,7 @@ export class WidgetDetailsComponent implements OnInit {
     if (!this.selectedWidgetService.getWidgetData())
       this.router.navigate(['home']);
   }
+
+  
+  
 }

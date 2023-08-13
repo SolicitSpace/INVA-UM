@@ -13,7 +13,7 @@ export class MainTimerComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {console.log("Init Main timer")
     this.handleUpdatingValues();
   }
 
