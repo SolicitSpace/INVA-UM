@@ -74,12 +74,30 @@ export class WidgetDetailsComponent implements OnInit {
       },
     };
 
-    console.log(
-      '===> ',
-      moment(this.createdOn, 'DD-MM-yyyy').toDate(),
-      moment(this.targetDate, 'DD-MM-yyyy').toDate()
-    );
+    // console.log(
+    //   '===> ',
+    //   moment(this.createdOn, 'DD-MM-yyyy').toDate(),
+    //   moment(this.targetDate, 'DD-MM-yyyy').toDate()
+    // );
 
+    console.log("=> ", this.widgetData.performed_on)
+    
+
+    // Works for countdown since it has a target date
+
+    // For streaks and last since we hav eto manually punch in dates
+
+
+    this.calendarEvt = [
+      {
+        start: moment(this.createdOn, 'DD-MM-yyyy').toDate(),
+        end: moment(this.targetDate, 'DD-MM-yyyy').toDate(),
+        title: this.widgetData.detail,
+        color: { ...colors['red'] },
+        allDay: true,
+      },
+    ];
+    
     this.calendarEvt = [
       {
         start: moment(this.createdOn, 'DD-MM-yyyy').toDate(),
