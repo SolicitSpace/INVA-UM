@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectedWidgetService } from '../../services/selected-widget.service';
 import { Router } from '@angular/router';
-import { WidgetDataM, WidgetStatusM, WidgetTypeM } from 'src/app/data/db';
+// import { WidgetDataM, WidgetStatusM, WidgetTypeM } from 'src/app/data/db';
+import { WidgetDataM, WidgetStatusM, WidgetPriorityM } from 'src/app/data/db';
 import {
   startOfDay,
   endOfDay,
@@ -42,11 +43,11 @@ export class WidgetDetailsComponent implements OnInit {
     this.handleInvalidState();
 
     this.setValueForStatus();
-    this.setValueForType();
+    // this.setValueForType();
     this.formatStartAndEndDates();
     this.setUpCalendarEvt();
 
-    if (this.widgetData.type == 1) {
+    if (this.widgetData.target_date) {
       this.timeRemaining = this.setTimeRemaining();
     }
   }
@@ -146,13 +147,13 @@ export class WidgetDetailsComponent implements OnInit {
     this.statusVal = statusObj[0].value;
   }
 
-  async setValueForType() {
-    const typeObj: WidgetTypeM[] = await db.widgetType
-      .where({ id: this.widgetData.type })
-      .toArray();
+  // async setValueForType() {
+  //   const typeObj: WidgetTypeM[] = await db.widgetType
+  //     .where({ id: this.widgetData.type })
+  //     .toArray();
 
-    this.typeVal = typeObj[0].value;
-  }
+  //   this.typeVal = typeObj[0].value;
+  // }
 
   handleInvalidState() {
     if (!this.selectedWidgetService.getWidgetData())

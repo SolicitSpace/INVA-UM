@@ -1,0 +1,72 @@
+.countdown-container {
+  display: flex;
+  flex-direction: column;
+  border: solid;
+  padding: 3% 2%;
+
+  .timer-container {
+    position: relative;
+    text-align: center;
+
+    p {
+      margin: 2% 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      //   border: solid;
+
+      span {
+        font-size: 0.75rem;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .div-line {
+    position: relative;
+    border: solid 1px;
+    // width: 100%;
+  }
+
+  .txt-container {
+    // border: solid;
+
+    p {
+      margin: 2% 0;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+  }
+
+  .news-container {
+    display: flex;
+    height: 2rem;
+    justify-content: space-between;
+    .news-minora {
+      flex-basis: 50%;
+      text-align: start;
+      // border-right: dotted 1px;
+      p {
+        font-weight: 600;
+
+      }
+    }
+    .news-majora {
+      position: relative;
+      height: 100%;
+      flex-basis: 50%;
+      text-align: end;
+      p {
+        position: relative;
+        height: 90%;
+        margin: 0;
+        font-weight: 600;
+        img {
+          position: relative;
+          object-fit: contain;
+          height: 100%;
+          width: auto;
+        }
+      }
+    }
+  }
+}

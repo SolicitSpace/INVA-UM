@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, liveQuery } from 'dexie';
-import { db, WidgetDataM, WidgetTypeM } from '../../data/db';
+// import { db, WidgetDataM, WidgetTypeM } from '../../data/db';
+import { db, WidgetDataM, WidgetPriorityM } from '../../data/db';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 
@@ -19,14 +20,12 @@ export class HomeComponent implements OnInit {
   // contains only ongoing widget list
   ongoingWidgetList!: WidgetDataM[];
 
-  // contains only the types of widgets
-  widgetTypeList$: Observable<WidgetTypeM[]> = liveQuery(() =>
-    db.widgetType.toArray()
-  );
+  
 
   constructor(private router: Router) {}
 
   ngOnInit() {
+
 
     this.widgetDataList$.subscribe((res) => {
       this.ongoingWidgetList = _.filter(res, { status: 1 });

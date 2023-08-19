@@ -2,25 +2,45 @@
 
 <form [formGroup]="widgetFormGroup">
 
-    <div class="field-container">
+    <!-- <div class="field-container">
         <label for="widget-type-select">Widget Type</label><br />
         <select name="widget-type-select" id="widget-type-select" formControlName="widgetType">
             <option value="" selected>Select a type</option>
             <option *ngFor="let type of widgetTypeList$ | async;" [value]="type.id">{{ type.value }}</option>
 
         </select>
-    </div>
+    </div> -->
 
-    <div class="field-container" *ngIf="widgetFormGroup.value.widgetType !== ''">
+    <div class="field-container">
         <label for="detail-input">Enter Detail(s)</label><br />
         <input type="text" name="detail-input" id="detail-input"
             placeholder="eg. name, one-line desc or any sort of point" formControlName="detail">
     </div>
 
     <!-- Only to be shown when Countdown is selected -->
-    <div class="field-container" *ngIf="widgetFormGroup.value.widgetType === '1'">
+    <div class="field-container">
         <label for="countdown-datepicker">Pick target date</label><br />
         <input type="date" id="countdown-datepicker" name="countdown-datepicker" formControlName="targetDate">
+    </div>
+    <div class="field-container">
+        <label>Pick Priority</label><br />
+        <div class="priority-btns-container">
+            <div class="radiobtn-container" *ngFor="let priority of widgetPriorityList$ | async;">
+                <input type="radio" [value]="priority.id" formControlName="priorityId" />
+                <label>{{ priority.value }}</label>
+            </div>
+
+        </div>
+    </div>
+    <div class="field-container checkbox-container">
+        <label for="highlight-input">Highlight the widget?</label>
+        <input type="checkbox" id="highlight-input" value="Low" formControlName="isHighlighted" />
+        <p>(Selecting it will highlight the widget in the homescreen)</p>
+    </div>
+    <div class="field-container color-container">
+        <label for="color-input">Widget Color</label>
+        <input type="color" id="color-input" value="" formControlName="color" />
+        <p>(Selecting it will assign the color for this widget)</p>
     </div>
 
 

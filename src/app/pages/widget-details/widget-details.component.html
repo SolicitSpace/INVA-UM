@@ -9,16 +9,14 @@
         <p>Type: </p>
         <p>{{ typeVal }}</p>
     </div>
-    <ng-container *ngIf="widgetData.type==1">
-        <div class="label-container">
-            <p>Target Date: </p>
-            <p>{{ targetDate }}</p>
-        </div>
-        <div class="label-container">
-            <p>Time Remaining: </p>
-            <p>{{ timeRemaining }}</p>
-        </div>
-    </ng-container>
+    <div class="label-container">
+        <p>Target Date: </p>
+        <p>{{ targetDate }}</p>
+    </div>
+    <div class="label-container">
+        <p>Time Remaining: </p>
+        <p>{{ timeRemaining }}</p>
+    </div>
     <div class="label-container">
         <p>Status: </p>
         <p>{{ statusVal }}</p>
