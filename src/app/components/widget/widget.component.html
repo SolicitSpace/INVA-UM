@@ -1,7 +1,10 @@
 <div class="countdown-container" (click)="openWidgetDetails()">
     <div class="timer-container">
-        <p>{{ timeVal }} day(s) <span>to go</span></p>
-        
+        <p *ngIf="widgetData.target_date != ''; else noTargetDateWidget">{{ timeVal }} day(s) <span>to go</span></p>
+        <ng-template #noTargetDateWidget>
+            <p><span>started</span> {{ timeVal }} day(s) <span>ago</span></p>
+        </ng-template>
+
     </div>
     <div class="div-line"></div>
     <div class="detail-container">
@@ -13,9 +16,9 @@
             <p>Best Streak 5 days</p>
         </div>
         <div class="news-majora">
-            
+
             <p><img src="./assets/streaks.png"> 6 days </p>
         </div>
-        
+
     </div>
 </div>

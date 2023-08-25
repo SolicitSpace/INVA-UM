@@ -7,7 +7,7 @@ import { SelectedWidgetService } from '../../services/selected-widget.service';
 @Component({
   selector: 'app-widget',
   templateUrl: './widget.component.html',
-  styleUrls: ['./widget.component.scss']
+  styleUrls: ['./widget.component.scss'],
 })
 export class WidgetComponent {
   @Input() widgetData!: WidgetDataM;
@@ -21,17 +21,18 @@ export class WidgetComponent {
   ) {}
 
   ngOnInit(): void {
-    console.log("this.widgetData : ", this.widgetData)
+    console.log('this.widgetData : ', this.widgetData);
     this.detail = this.widgetData.detail;
 
-    // what should we do???????????
-    if (this.widgetData.target_date == "") {
+    // if no target date is set then count the number of dayys from creation
+    if (this.widgetData.target_date == '') {
 
-      const val = moment(this.widgetData.target_date, 'YYYY-MM-DD').diff(
+      // For now used created on later will use the first date from implemented on
+      const val = moment(this.widgetData.created_on, 'YYYY-MM-DD').diff(
         moment()
       );
 
-    this.timeVal = Math.ceil(moment.duration(val).asDays());
+      this.timeVal = Math.ceil(moment.duration(val).asDays());
       return;
     }
 
@@ -39,9 +40,9 @@ export class WidgetComponent {
       moment()
     );
 
-    console.log("val : ", val )
-    console.log("val : ", moment.duration(val).asDays())
-    console.log(this.widgetData)
+    console.log('val : ', val);
+    console.log('val : ', moment.duration(val).asDays());
+    console.log(this.widgetData);
     this.timeVal = Math.ceil(moment.duration(val).asDays());
   }
 
