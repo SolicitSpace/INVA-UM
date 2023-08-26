@@ -4,11 +4,14 @@
     <div class="calendar-nav-container">
         <div class="top-section">
             <button class="prev-nav" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">Previous</button>
+                (viewDateChange)="closeOpenMonthViewDay()">
+                <img src="./assets/fa/angle-left.svg" />
+            </button>
             <p class="current-disp">{{ viewDate | calendarDate : view + 'ViewTitle' : 'en' }}</p>
 
             <button class="next-nav" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">Next</button>
+                (viewDateChange)="closeOpenMonthViewDay()">
+                <img src="./assets/fa/angle-left.svg" style="transform: scale(-1);" /></button>
         </div>
         <div class="bottom-section">
             <button class="switch-type-btns" (click)="setView(CalendarView.Month)"

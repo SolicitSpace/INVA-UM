@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, liveQuery } from 'dexie';
-import { db, WidgetTypeM } from '../../data/db';
+import { db, WidgetPriorityM } from '../../data/db';
 import * as moment from 'moment';
 
 @Component({
@@ -17,22 +17,31 @@ import * as moment from 'moment';
 })
 export class CreateNewComponent {
   // contains only the types of widgets
-  widgetTypeList$: Observable<WidgetTypeM[]> = liveQuery(() =>
-    db.widgetType.toArray()
+  widgetPriorityList$: Observable<WidgetPriorityM[]> = liveQuery(() =>
+    db.widgetPriority.toArray()
   );
+  // widgetTypeList$: Observable<WidgetTypeM[]> = liveQuery(() =>
+  //   db.widgetType.toArray()
+  // );
 
   widgetFormGroup = this.fb.group(
     {
-      widgetType: ['', Validators.required],
       detail: ['', Validators.required],
       targetDate: [''],
+      priorityId: [1, Validators.required],
+      isHighlighted: [false],
+      color: ['']
     },
     {
       validators: [this.customValidator],
     }
   );
+clicked() {
 
+  console.log(this.widgetFormGroup.value);
+}
   customValidator(formGroup: FormGroup): ValidationErrors | null {
+    
     if (!formGroup.value.detail) return null;
     if (formGroup.value.detail.trim() == '')
       return { detail_error: 'Detail cannot be empty' };
@@ -62,10 +71,13 @@ export class CreateNewComponent {
     console.log(this.widgetFormGroup);
     const widgetId = await db.widgetData
       .add({
-        type: parseInt(this.widgetFormGroup.value.widgetType),
+        // type: parseInt(this.widgetFormGroup.value.widgetType),
+        priority_id: this.widgetFormGroup.value.priorityId,
         detail: this.widgetFormGroup.value.detail,
         target_date: this.widgetFormGroup.value.targetDate,
         status: 1, // marking status as ongoing
+        color: this.widgetFormGroup.value.color,
+        is_highlighted: this.widgetFormGroup.value.isHighlighted,
         created_on: moment().format(),
         last_edited_on: moment().format(),
       })
@@ -81,6 +93,7 @@ export class CreateNewComponent {
   }
 
   isFormInvalid(): boolean {
+    console.log(this.widgetFormGroup)
     return this.widgetFormGroup.status==='INVALID';
   }
 }

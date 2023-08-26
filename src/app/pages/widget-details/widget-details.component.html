@@ -1,15 +1,16 @@
-<h1>Widget Details</h1>
+<p class="page-title">Widget Details</p>
+
 
 <div class="details-container">
-    <div class="label-container">
-        <p>Name: </p>
-        <p>{{ widgetData.detail }}</p>
-    </div>
-    <div class="label-container">
-        <p>Type: </p>
-        <p>{{ typeVal }}</p>
-    </div>
-    <ng-container *ngIf="widgetData.type==1">
+    <div class="info-container">
+        <div class="label-container">
+            <p>Name: </p>
+            <p>{{ widgetData.detail }}</p>
+        </div>
+        <div class="label-container">
+            <p>Type: </p>
+            <p>{{ typeVal }}</p>
+        </div>
         <div class="label-container">
             <p>Target Date: </p>
             <p>{{ targetDate }}</p>
@@ -18,17 +19,16 @@
             <p>Time Remaining: </p>
             <p>{{ timeRemaining }}</p>
         </div>
-    </ng-container>
-    <div class="label-container">
-        <p>Status: </p>
-        <p>{{ statusVal }}</p>
+        <div class="label-container">
+            <p>Status: </p>
+            <p>{{ statusVal }}</p>
+        </div>
+        <div class="label-container">
+            <p>Created On: </p>
+            <p>{{ createdOn }}</p>
+        </div>
     </div>
-    <div class="label-container">
-        <p>Created On: </p>
-        <p>{{ createdOn }}</p>
-    </div>
-    <div class="label-container">
-        <p>Calendar: </p>
+    <div class="calendar-container">
         <app-calendar [events]="calendarEvt"></app-calendar>
     </div>
 

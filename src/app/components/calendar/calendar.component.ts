@@ -190,6 +190,8 @@ export class CalendarComponent {
   }
 
   setView(view: CalendarView) {
+
+    console.log("view : ", CalendarView);
     this.view = view;
   }
 

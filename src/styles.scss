@@ -1,13 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 @font-face {
-    font-family: LouisGeorgeCafe;
-    src: url(./assets/fonts/LouisGeorgeCafe.ttf) format("truetype") ;
+  font-family: LouisGeorgeCafe;
+  src: url(./assets/fonts/LouisGeorgeCafe.ttf) format("truetype");
 }
 
 
-html, body {
-    padding: 0.25%;
-    margin: 0;
-    font-family: LouisGeorgeCafe;
+$title-txt-1: 2.6vw;
+$title-txt-2: 1.8vw;
+$value-txt: 1.4vw;
+
+
+html,
+body {
+  padding: 0.25%;
+  margin: 0;
+  font-family: LouisGeorgeCafe;
 }
 

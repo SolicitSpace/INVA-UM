@@ -24,6 +24,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/moment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import * as moment from 'moment';
+import { WidgetComponent } from './components/widget/widget.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -47,6 +48,7 @@ export function momentAdapterFactory() {
     LimitDecimalsPipe,
     WidgetDetailsComponent,
     CalendarComponent,
+    WidgetComponent,
   ],
   imports: [
     BrowserModule,
