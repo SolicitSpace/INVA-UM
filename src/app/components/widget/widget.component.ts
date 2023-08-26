@@ -25,24 +25,24 @@ export class WidgetComponent {
     this.detail = this.widgetData.detail;
 
     // if no target date is set then count the number of dayys from creation
-    if (this.widgetData.target_date == '') {
+    if (this.widgetData.target_date == '') this.setDaysPassed();
+    else this.setDaysPending();
 
-      // For now used created on later will use the first date from implemented on
-      const val = moment(this.widgetData.created_on, 'YYYY-MM-DD').diff(
-        moment()
-      );
+    console.log(this.widgetData);
+  }
 
-      this.timeVal = Math.ceil(moment.duration(val).asDays());
-      return;
-    }
+  setDaysPassed() {
+    // For now used created on later will use the first date from implemented on
+    const val = moment(this.widgetData.created_on, 'YYYY-MM-DD').diff(moment());
 
+    this.timeVal = Math.ceil(moment.duration(val).asDays());
+    this.timeVal = Math.abs(this.timeVal);
+  }
+  setDaysPending() {
     const val = moment(this.widgetData.target_date, 'YYYY-MM-DD').diff(
       moment()
     );
-
-    console.log('val : ', val);
-    console.log('val : ', moment.duration(val).asDays());
-    console.log(this.widgetData);
+    
     this.timeVal = Math.ceil(moment.duration(val).asDays());
   }
 

@@ -1,17 +1,37 @@
+@import "./../../../styles.scss";
+
+.page-title {
+  font-size: $title-txt-1;
+  font-weight: 600;
+}
+
 .details-container {
-
+    display: flex;
+  .info-container {
+    position: relative;
+    flex-basis: 45%;
     .label-container {
-        margin: 1% 0;
+      margin: 1% 0;
 
-        p:nth-child(1) {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 0;
-        }
-        p:nth-child(2) {
-            font-size: 0.85rem;
-            font-weight: 400;
-            margin: 0;
-        }
+      p:nth-child(1) {
+        font-size: $title-txt-2;
+        font-weight: 600;
+        margin: 0;
+      }
+      p:nth-child(2) {
+        font-size: $value-txt;
+        font-weight: 400;
+        margin: 0;
+      }
     }
+  }
+
+  .calendar-container {
+    position: relative;
+    flex-basis: 65%;
+    app-calendar {
+        display: block;
+        border: solid 1px lightgrey;
+    }
+  }
 }

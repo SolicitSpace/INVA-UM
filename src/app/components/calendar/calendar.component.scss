@@ -1,6 +1,7 @@
 @import "https://unpkg.com/@fortawesome/fontawesome-free@6.2.1/css/all.css";
 @import "https://unpkg.com/angular-calendar@0.31.0/css/angular-calendar.css";
 @import "https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.css";
+@import "../../../styles.scss";
 
 .calendar-container {
   position: relative;
@@ -16,14 +17,14 @@
 
       .prev-nav,
       .next-nav {
-        width: 8rem;
+        width: 2rem;
         font-size: 1rem;
       }
       .current-disp {
-          font-size: 1.25rem;
+          font-size: $title-txt-2;
           font-weight: 600;
           margin: auto;
-          width: 8rem;
+          width: 12rem;
           text-align: center;
       }
     }
