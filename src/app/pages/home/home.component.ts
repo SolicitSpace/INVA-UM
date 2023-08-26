@@ -26,10 +26,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
 
-
     this.widgetDataList$.subscribe((res) => {
       this.ongoingWidgetList = _.filter(res, { status: 1 });
-      console.log(this.ongoingWidgetList)
     });
   }
 

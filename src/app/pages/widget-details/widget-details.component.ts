@@ -39,7 +39,6 @@ export class WidgetDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('++> ', this.widgetData);
     this.handleInvalidState();
 
     this.setValueForStatus();

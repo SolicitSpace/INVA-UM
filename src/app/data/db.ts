@@ -27,7 +27,7 @@ export interface WidgetDataM {
   detail: string;
   target_date?: string;
   status: number;
-  performed_on?: string[];
+  performed_on?: number[];
   priority_id: number;
   is_highlighted: boolean;
   color: string;
@@ -43,6 +43,7 @@ export class AppDB extends Dexie {
 
   constructor() {
     super('ngdexieliveQuery');
+
     this.version(3).stores({
       widgetData: '++id',
       widgetStatus: '++id',
@@ -52,7 +53,6 @@ export class AppDB extends Dexie {
   }
 
   populate() {
-    
     // Filling certain datas when db is first getting created
     // Populating `Widget Status` Table data
     this.generateWidgetStatusTable();
@@ -62,6 +62,10 @@ export class AppDB extends Dexie {
 
     // Populating `Widget Priority` Table data
     this.generateWidgetPriorityTable();
+
+    this.generateWidgetTable();
+
+    // this.stressTestWidgetTable();
 
     console.log('Creating required stores...');
   }
@@ -95,19 +99,55 @@ export class AppDB extends Dexie {
       },
     ]);
   }
-  // async generateWidgetTypeTable() {
-  //   await db.widgetType.bulkAdd([
-  //     {
-  //       value: 'Countdown',
-  //     },
-  //     {
-  //       value: 'Countup / Streaks',
-  //     },
-  //     {
-  //       value: 'Time elapsed Tracker',
-  //     },
-  //   ]);
-  // }
+  async stressTestWidgetTable() {
+    let performedOn = [];
+
+    for (let i = 0; i < 365 * 10; i++) performedOn.push(1693022081 + i);
+
+    console.log('performedOn : ', performedOn);
+
+    let widgets = [];
+    for (let i = 0; i < 1000; i++) {
+      widgets.push({
+        detail: 'synapse ' + i,
+        target_date: '',
+        status: 1,
+        performed_on: performedOn,
+        priority_id: 1,
+        is_highlighted: true,
+        color: 'yellow',
+        created_on: 'string',
+        last_edited_on: 'string',
+      });
+    }
+    console.log('widgets : ', widgets);
+    await db.widgetData.bulkAdd(widgets);
+  }
+
+  async generateWidgetTable() {
+    let performedOn = [];
+
+    for (let i = 0; i < 20; i++) performedOn.push(1693022081 + i);
+
+    console.log('performedOn : ', performedOn);
+
+    let widgets = [];
+    for (let i = 0; i < 6; i++) {
+      widgets.push({
+        detail: 'synapse ' + i,
+        target_date: '',
+        status: 1,
+        performed_on: performedOn,
+        priority_id: 1,
+        is_highlighted: true,
+        color: 'yellow',
+        created_on: 'string',
+        last_edited_on: 'string',
+      });
+    }
+    console.log('widgets : ', widgets);
+    await db.widgetData.bulkAdd(widgets);
+  }
 }
 
 export const db = new AppDB();

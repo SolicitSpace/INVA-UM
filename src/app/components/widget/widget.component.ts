@@ -21,14 +21,12 @@ export class WidgetComponent {
   ) {}
 
   ngOnInit(): void {
-    console.log('this.widgetData : ', this.widgetData);
     this.detail = this.widgetData.detail;
 
     // if no target date is set then count the number of dayys from creation
     if (this.widgetData.target_date == '') this.setDaysPassed();
     else this.setDaysPending();
 
-    console.log(this.widgetData);
   }
 
   setDaysPassed() {
