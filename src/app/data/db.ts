@@ -1,5 +1,5 @@
 import Dexie, { Table } from 'dexie';
-
+import * as moment from 'moment';
 // export interface WidgetTypeM {
 //   id?: number;
 //   value: string;
@@ -124,29 +124,38 @@ export class AppDB extends Dexie {
     await db.widgetData.bulkAdd(widgets);
   }
 
+
+  getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  }
+  
+  
+
   async generateWidgetTable() {
     let performedOn = [];
 
-    for (let i = 0; i < 20; i++) performedOn.push(1693022081 + i);
-
-    console.log('performedOn : ', performedOn);
-
-    let widgets = [];
+    let someDate, targetDate, createdOnDate;
     for (let i = 0; i < 6; i++) {
-      widgets.push({
-        detail: 'synapse ' + i,
-        target_date: '',
+      performedOn.push(1693022081 + i);
+
+      someDate = new Date();
+      targetDate = (i < 4) ? moment().add(this.getRandomInt(0, 20), 'days').format() : '';
+      createdOnDate = moment().add(this.getRandomInt(0, 20), 'days').format();
+
+      await db.widgetData.add({
+        detail: 'Task no. ' + i,
+        target_date: targetDate,
         status: 1,
         performed_on: performedOn,
         priority_id: 1,
         is_highlighted: true,
         color: 'yellow',
-        created_on: 'string',
-        last_edited_on: 'string',
+        created_on: createdOnDate,
+        last_edited_on: createdOnDate,
       });
     }
-    console.log('widgets : ', widgets);
-    await db.widgetData.bulkAdd(widgets);
   }
 }
 
