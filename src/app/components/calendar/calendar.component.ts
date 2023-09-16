@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 
 
@@ -8,6 +8,11 @@ import * as moment from 'moment';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+
+  @Input() createdOn: string = 'NA';
+  currDate: string = 'NA';
+  @Input() targetDate: string = 'NA';
+   
 
   // notes
   headerLabels: string[] = [
@@ -30,6 +35,11 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Creating calendar...");
+    console.log(this.createdOn, this.targetDate);
+
+    this.currDate = this.currSelTimestamp.format("DD-MM-YYYY")
+    console.log(this.currDate);
+    
     this.generateCalendar();
   }
 
@@ -57,7 +67,8 @@ export class CalendarComponent implements OnInit {
 
       this.days.push({
         timestamp: timeStamp,
-        date: timeStamp.format('DD'),
+        dayOfMonth: timeStamp.format('DD'),
+        date: timeStamp.format('DD-MM-YYYY'),
         name: timeStamp.format('dddd')
       });
     }

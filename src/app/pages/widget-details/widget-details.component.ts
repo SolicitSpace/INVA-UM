@@ -38,7 +38,7 @@ export class WidgetDetailsComponent implements OnInit {
 
   ngOnInit() {
     // tmp disabled to dev calendar
-    return;
+    // return;
     this.handleInvalidState();
     this.setValueForStatus();
     // this.setValueForType();
