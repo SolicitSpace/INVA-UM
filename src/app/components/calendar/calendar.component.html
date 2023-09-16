@@ -1,33 +1,36 @@
-<div class="calendar-container">
+<p>calendar works </p>
 
+<div class="top-section-container">
+    <button (click)="navMonthBack()">prev</button>
+    <p>{{ currSelMonth }}</p>
+    <button (click)="navMonthForward()">next</button>
+</div>
 
-    <div class="calendar-nav-container">
-        <div class="top-section">
-            <button class="prev-nav" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
-                <img src="./assets/fa/angle-left.svg" />
-            </button>
-            <p class="current-disp">{{ viewDate | calendarDate : view + 'ViewTitle' : 'en' }}</p>
+<div class="calendar-grid-container">
 
-            <button class="next-nav" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
-                <img src="./assets/fa/angle-left.svg" style="transform: scale(-1);" /></button>
+    <ng-container *ngFor="let lbl of headerLabels; ">
+        <div class="header day-container">
+            <p>{{lbl}}</p>
         </div>
-    </div>
-    <br />
-    <div [ngSwitch]="view">
-        <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
-            [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-            (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-        </mwl-calendar-month-view>
-        <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-            (eventTimesChanged)="eventTimesChanged($event)">
-        </mwl-calendar-week-view>
-        <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
-            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-            (eventTimesChanged)="eventTimesChanged($event)">
-        </mwl-calendar-day-view>
-    </div>
+    </ng-container>
 
+    <ng-container *ngFor="let day of headerLabels | slice:0:preLimit">
+        <div class="day-container" >
+            <p>NA</p>
+        </div>
+    </ng-container>
+
+    <ng-container *ngFor="let day of days; ">
+        <div class="day-container" >
+            <p>{{ day.date }}</p>
+        </div>
+    </ng-container>
+
+
+    <ng-container *ngFor="let day of headerLabels | slice:postLimit:6">
+        <div class="day-container" >
+            <p>NA</p>
+        </div>
+    </ng-container>
+    
 </div>

@@ -1,43 +1,23 @@
-@import "https://unpkg.com/@fortawesome/fontawesome-free@6.2.1/css/all.css";
-@import "https://unpkg.com/angular-calendar@0.31.0/css/angular-calendar.css";
-@import "https://unpkg.com/flatpickr@4.6.13/dist/flatpickr.css";
-@import "../../../styles.scss";
+.top-section-container {
+    display: flex;
+    justify-content: space-between;
+}
 
-.calendar-container {
-  position: relative;
+.calendar-grid-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    align-items: center;
 
-  padding: 2% 5%;
-
-  .calendar-nav-container {
-    position: relative;
-
-    .top-section {
-      display: flex;
-      justify-content: space-between;
-
-      .prev-nav,
-      .next-nav {
-        width: 2rem;
-        font-size: 1rem;
-      }
-      .current-disp {
-          font-size: $title-txt-2;
-          font-weight: 600;
-          margin: auto;
-          width: 12rem;
-          text-align: center;
-      }
+    .header {
+        font-size: 1.2rem;
+        font-weight: 600;
     }
-    .bottom-section {
-      display: flex;
-      position: relative;
-      justify-content: center;
-      margin-top: 1rem;
-      .switch-type-btns {
-        position: relative;
-        width: 10rem;
-        margin: 0 1%;
-      }
+
+    .day-container {
+        border: solid 1px black;
+        text-align: center;
+        
     }
-  }
+
+
 }

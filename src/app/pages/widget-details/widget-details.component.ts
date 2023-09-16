@@ -15,8 +15,6 @@ import {
 } from 'date-fns';
 import * as moment from 'moment';
 import { db } from '../../data/db';
-import { CalendarEvent } from 'angular-calendar';
-import { EventColor } from 'calendar-utils';
 
 @Component({
   selector: 'app-widget-details',
@@ -26,21 +24,22 @@ import { EventColor } from 'calendar-utils';
 export class WidgetDetailsComponent implements OnInit {
   widgetData: WidgetDataM = this.selectedWidgetService.getWidgetData();
 
+
   statusVal: string = 'NA';
   typeVal: string = 'NA';
   timeRemaining: string = 'NA';
-  calendarEvt!: CalendarEvent[];
   createdOn: string = 'NA';
   targetDate: string = 'NA';
 
   constructor(
     private selectedWidgetService: SelectedWidgetService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
+    // tmp disabled to dev calendar
+    return;
     this.handleInvalidState();
-
     this.setValueForStatus();
     // this.setValueForType();
     this.formatStartAndEndDates();
@@ -59,20 +58,6 @@ export class WidgetDetailsComponent implements OnInit {
       : moment().format('DD-MM-yyyy');
   }
   setUpCalendarEvt() {
-    const colors: Record<string, EventColor> = {
-      red: {
-        primary: '#ad2121',
-        secondary: '#FAE3E3',
-      },
-      blue: {
-        primary: '#1e90ff',
-        secondary: '#D1E8FF',
-      },
-      yellow: {
-        primary: '#e3bc08',
-        secondary: '#FDF1BA',
-      },
-    };
 
     // console.log(
     //   '===> ',
@@ -81,32 +66,14 @@ export class WidgetDetailsComponent implements OnInit {
     // );
 
     console.log("=> ", this.widgetData.performed_on)
-    
+
 
     // Works for countdown since it has a target date
 
     // For streaks and last since we hav eto manually punch in dates
 
 
-    this.calendarEvt = [
-      {
-        start: moment(this.createdOn, 'DD-MM-yyyy').toDate(),
-        end: moment(this.targetDate, 'DD-MM-yyyy').toDate(),
-        title: this.widgetData.detail,
-        color: { ...colors['red'] },
-        allDay: true,
-      },
-    ];
-    
-    this.calendarEvt = [
-      {
-        start: moment(this.createdOn, 'DD-MM-yyyy').toDate(),
-        end: moment(this.targetDate, 'DD-MM-yyyy').toDate(),
-        title: this.widgetData.detail,
-        color: { ...colors['red'] },
-        allDay: true,
-      },
-    ];
+
   }
 
   setTimeRemaining() {
@@ -155,6 +122,7 @@ export class WidgetDetailsComponent implements OnInit {
   // }
 
   handleInvalidState() {
+
     if (!this.selectedWidgetService.getWidgetData())
       this.router.navigate(['home']);
   }
