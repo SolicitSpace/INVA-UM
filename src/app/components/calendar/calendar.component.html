@@ -1,9 +1,11 @@
-<p>calendar works </p>
-
 <div class="top-section-container">
-    <button (click)="navMonthBack()">prev</button>
+    <button (click)="navMonthBack()">
+        <img src="./assets/fa/angle-left.svg" />
+    </button>
     <p>{{ currSelMonth }}</p>
-    <button (click)="navMonthForward()">next</button>
+    <button (click)="navMonthForward()">
+        <img src="./assets/fa/angle-left.svg" />
+    </button>
 </div>
 
 <div class="calendar-grid-container">
@@ -15,20 +17,24 @@
     </ng-container>
 
     <ng-container *ngFor="let day of headerLabels | slice:0:preLimit">
-        <div class="day-container" >
+        <div class="empty-cells day-container" >
             <p>NA</p>
         </div>
     </ng-container>
 
     <ng-container *ngFor="let day of days; ">
-        <div class="day-container" >
+        <div class="day-cells day-container" >
             <p>{{ day.date }}</p>
+            <div class="isPerformed-container">
+                <img src="./assets/fa/check-solid.svg" />
+                <!-- <img src="./assets/fa/xmark-solid.svg" /> -->
+            </div>
         </div>
     </ng-container>
 
 
     <ng-container *ngFor="let day of headerLabels | slice:postLimit:6">
-        <div class="day-container" >
+        <div class="empty-cells day-container" >
             <p>NA</p>
         </div>
     </ng-container>
