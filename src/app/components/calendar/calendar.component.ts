@@ -4,6 +4,8 @@ import {
   OnInit,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import * as moment from 'moment';
 import { calendarDayT } from '../../data/types';
@@ -18,6 +20,8 @@ export class CalendarComponent implements OnInit {
   @Input() createdOn: string = 'NA';
   currDate: string = 'NA';
   @Input() targetDate: string = 'NA';
+
+  @Output() updatePerformedOnEvt = new EventEmitter<calendarDayT>();
 
   // notes
   headerLabels: string[] = [
@@ -79,6 +83,7 @@ export class CalendarComponent implements OnInit {
         dayOfMonth: timeStamp.format('DD'),
         date: timeStamp.format('DD-MM-YYYY'),
         name: timeStamp.format('dddd'),
+        isPerfCtrlOn: false,
       });
     }
 
@@ -98,9 +103,21 @@ export class CalendarComponent implements OnInit {
 
   isBetweenDay(day: calendarDayT) {
     return (
-      day.timestamp.valueOf() >
+      day.timestamp.valueOf() >=
         moment(this.createdOn, 'DD-MM-YYYY').valueOf() &&
-      day.timestamp.valueOf() < moment(this.targetDate, 'DD-MM-YYYY').valueOf()
+      day.timestamp.valueOf() <= moment(this.targetDate, 'DD-MM-YYYY').valueOf()
     );
+  }
+  openPerformedCtrls(index: number) {
+    this.days = this.days.map((o) => ({
+      ...o,
+      isPerfCtrlOn: false,
+    }));
+    this.days[index].isPerfCtrlOn = true;
+  }
+  setPerformedStatus(isPerformed: boolean, day: calendarDayT) {
+    day.isPerformed = isPerformed;
+    // need the parent array
+    this.updatePerformedOnEvt.emit(day);
   }
 }

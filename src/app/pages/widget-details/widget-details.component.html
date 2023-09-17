@@ -1,36 +1,37 @@
 <p class="page-title">Widget Details</p>
 
-
 <div class="details-container">
-    <div class="info-container">
-        <div class="label-container">
-            <p>Name: </p>
-            <p>{{ widgetData.detail }}</p>
-        </div>
-        <div class="label-container">
-            <p>Type: </p>
-            <p>{{ typeVal }}</p>
-        </div>
-        <div class="label-container">
-            <p>Target Date: </p>
-            <p>{{ targetDate }}</p>
-        </div>
-        <div class="label-container">
-            <p>Time Remaining: </p>
-            <p>{{ timeRemaining }}</p>
-        </div>
-        <div class="label-container">
-            <p>Status: </p>
-            <p>{{ statusVal }}</p>
-        </div>
-        <div class="label-container">
-            <p>Created On: </p>
-            <p>{{ createdOn }}</p>
-        </div>
+  <div class="info-container">
+    <div class="label-container">
+      <p>Name:</p>
+      <p>{{ widgetData.detail }}</p>
     </div>
-    <div class="calendar-container">
-        <app-calendar [createdOn]="createdOn" [targetDate]="targetDate"></app-calendar>
+    <div class="label-container">
+      <p>Type:</p>
+      <p>{{ typeVal }}</p>
     </div>
-
-
+    <div class="label-container">
+      <p>Target Date:</p>
+      <p>{{ targetDate }}</p>
+    </div>
+    <div class="label-container">
+      <p>Time Remaining:</p>
+      <p>{{ timeRemaining }}</p>
+    </div>
+    <div class="label-container">
+      <p>Status:</p>
+      <p>{{ statusVal }}</p>
+    </div>
+    <div class="label-container">
+      <p>Created On:</p>
+      <p>{{ createdOn }}</p>
+    </div>
+  </div>
+  <div class="calendar-container">
+    <app-calendar
+      [createdOn]="createdOn"
+      [targetDate]="targetDate"
+      (updatePerformedOnEvt)="setPerformedOnDB($event)"
+    ></app-calendar>
+  </div>
 </div>

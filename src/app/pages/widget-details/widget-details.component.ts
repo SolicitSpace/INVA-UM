@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SelectedWidgetService } from '../../services/selected-widget.service';
 import { Router } from '@angular/router';
 // import { WidgetDataM, WidgetStatusM, WidgetTypeM } from 'src/app/data/db';
-import { WidgetDataM, WidgetStatusM, WidgetPriorityM } from 'src/app/data/db';
+import { WidgetDataM, WidgetStatusM, db } from 'src/app/data/db';
 import {
   startOfDay,
   endOfDay,
@@ -14,7 +14,7 @@ import {
   addHours,
 } from 'date-fns';
 import * as moment from 'moment';
-import { db } from '../../data/db';
+import { calendarDayT } from 'src/app/data/types';
 
 @Component({
   selector: 'app-widget-details',
@@ -119,4 +119,35 @@ export class WidgetDetailsComponent implements OnInit {
     if (!this.selectedWidgetService.getWidgetData())
       this.router.navigate(['home']);
   }
+
+  async setPerformedOnDB(day: calendarDayT) {
+    const data = await db.widgetData.get({id: this.widgetData.id})
+    console.log("day : ", day);
+    console.log("data : ", data?.id);
+
+    if (!data) return;
+    if (!data.id) return;
+
+    const updData = await db.widgetData.update(data.id, {detail: "temple"})
+    console.log("updData : ", updData);
+    
+
+
+      // .add({
+      //   // type: parseInt(this.widgetFormGroup.value.widgetType),
+      //   priority_id: this.widgetFormGroup.value.priorityId,
+      //   detail: this.widgetFormGroup.value.detail,
+      //   target_date: this.widgetFormGroup.value.targetDate,
+      //   status: 1, // marking status as ongoing
+      //   color: this.widgetFormGroup.value.color,
+      //   is_highlighted: this.widgetFormGroup.value.isHighlighted,
+      //   created_on: moment().format(),
+      //   last_edited_on: moment().format(),
+      // })
+      // .catch((err) => {
+      //   throw err;
+      // });
+  }
+
+  
 }

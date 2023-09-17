@@ -1,108 +1,194 @@
 .top-section-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    button:nth-of-type(2) {
-        img {
-            transform: rotate(180deg);
-        }
+  button:nth-of-type(2) {
+    img {
+      transform: rotate(180deg);
     }
+  }
 
-    button {
-        img {
-            position: relative;
-            width: 1.4vw;
-        }
+  button {
+    img {
+      position: relative;
+      width: 1.4vw;
     }
+  }
 
-    p {
-        font-size: 1.8vw;
-        font-weight: 600;
-        margin: 0;
-    }
+  p {
+    font-size: 1.8vw;
+    font-weight: 600;
+    margin: 0;
+  }
 }
 
 .calendar-grid-container {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+
+  .header {
+    font-size: 1.5vw;
+    font-weight: 600;
+  }
+
+  .day-container {
+    display: flex;
+    height: 4.2vw;
     align-items: center;
+    justify-content: center;
+    border-left: solid 1px black;
+    border-top: solid 1px black;
+    box-sizing: border-box;
 
-    .header {
-        font-size: 1.5vw;
-        font-weight: 600;
+    p {
+      // padding: 10% 0;
+      margin: 0;
+    }
+  }
+
+  .day-cells {
+    position: relative;
+    align-items: flex-start;
+    justify-content: flex-end;
+    font-size: 1.05vw;
+    font-weight: 400;
+    padding: 5%;
+
+    button {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
     }
 
-    .day-container {
-        display: flex;
-        height: 4.2vw;
-        align-items: center;
-        justify-content: center;
-        border-left: solid 1px black;
-        border-top: solid 1px black;
-        box-sizing: border-box;
-
-        p {
-            // padding: 10% 0;
-            margin: 0;
-        }
+    .isPerformed-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 36%;
+      transform: translate(-50%, -50%);
+      object-fit: contain;
+      height: auto;
     }
 
-    .day-cells {
+    &:hover {
+      // transform: scale(1.02);
+      -webkit-box-shadow: 0.5px 0.5px 2px 1px #252525;
+      -moz-box-shadow: 0.5px 0.5px 2px 1px #252525;
+      box-shadow: 0.5px 0.5px 2px 1px #252525;
+    }
+    &:active {
+      // transform: scale(1.02);
+      -webkit-box-shadow: 0.5px 0.5px 2px 0px #252525;
+      -moz-box-shadow: 0.5px 0.5px 2px 0px #252525;
+      box-shadow: 0.5px 0.5px 2px 0px #252525;
+    }
+  }
+
+  .empty-cells {
+    font-weight: 400;
+  }
+
+  .curr-day {
+    -webkit-box-shadow: 0.5px 0.5px 0px 2px #2196f3 !important;
+    -moz-box-shadow: 0.5px 0.5px 0px 2px #2196f3 !important;
+    box-shadow: 0.5px 0.5px 0px 2px #2196f3 !important;
+    z-index: 12 !important;
+  }
+
+  .created-day {
+    z-index: 12 !important;
+    color: white;
+    font-weight: 600;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 25%;
+      height: 50%;
+      z-index: -1;
+      background-color: #4caf50;
+    }
+  }
+
+  .target-day {
+    // -webkit-box-shadow: 0.5px 0.5px 0px 2px #f44336;
+    // -moz-box-shadow: 0.5px 0.5px 0px 2px #f44336;
+    // box-shadow: 0.5px 0.5px 0px 2px #f44336;
+    z-index: 12 !important;
+    color: white;
+    font-weight: 600;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 25%;
+      height: 50%;
+      z-index: -1;
+      background-color: #f44336;
+    }
+  }
+  .between-day {
+    position: relative;
+    // -webkit-box-shadow: 0px 0px 0px 2px #f44336;
+    // -moz-box-shadow: 0px 0px 0px 2px #f44336;
+    // box-shadow: 0px 0px 0px 2px #f44336;
+    background-color: #ddff36;
+    z-index: 10;
+
+    button {
+      cursor: pointer;
+    }
+
+    .performed-ctrls-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      background: rgba(255, 255, 255, 0.75);
+      button {
         position: relative;
-        align-items: flex-start;
-        justify-content: flex-end;
-        font-size: 1.05vw;
-        font-weight: 400;
-        padding: 5%;
-
-        .isPerformed-container {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 36%;
-            transform: translate(-50%, -50%);
-            object-fit: contain;
-            height: auto;
-
+        top: 50%;
+        left: 0;
+        width: 40%;
+        height: 80%;
+        transform: translateY(-50%);
+        img {
+          width: 54%;
+          height: auto;
+          object-fit: contain;
+          filter: invert(97%) sepia(99%) saturate(0%) hue-rotate(89deg)
+            brightness(106%) contrast(100%);
+          transition: all 0.1s ease-in;
+          top: 50%;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          &:active {
+            opacity: 0.7;
+          }
         }
+      }
 
-
+      button:nth-child(1) {
+        border: solid 1px white;
+        background-color: red;
+      }
+      button:nth-child(2) {
+        border: solid 1px white;
+        background-color: green;
+      }
     }
-
-    .empty-cells {
-        font-weight: 400;
-
-    }
-
-
-    .curr-day {
-        -webkit-box-shadow: 0px 0px 0px 2px #2196F3;
-        -moz-box-shadow: 0px 0px 0px 2px #2196F3;
-        box-shadow: 0px 0px 0px 2px #2196F3;
-        // background-color: #2196F3;
-        border: solid 2px blue;
-    }
-
-    .created-day {
-        // -webkit-box-shadow: 0px 0px 0px 2px #4caf50;
-        // -moz-box-shadow: 0px 0px 0px 2px #4caf50;
-        // box-shadow: 0px 0px 0px 2px #4caf50;
-        background-color: #4caf50;
-    }
-
-    .target-day {
-        // -webkit-box-shadow: 0px 0px 0px 2px #f44336;
-        // -moz-box-shadow: 0px 0px 0px 2px #f44336;
-        // box-shadow: 0px 0px 0px 2px #f44336;
-        background-color: #f44336;
-    }
-    .between-day {
-        // -webkit-box-shadow: 0px 0px 0px 2px #f44336;
-        // -moz-box-shadow: 0px 0px 0px 2px #f44336;
-        // box-shadow: 0px 0px 0px 2px #f44336;
-        background-color: #ddff36;
-    }
-
+  }
 }

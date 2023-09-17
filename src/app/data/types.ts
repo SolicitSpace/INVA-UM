@@ -5,6 +5,8 @@ type calendarDayT = {
     dayOfMonth: string;
     date: string;
     name: string;
+    isPerfCtrlOn: boolean,
+    isPerformed?: boolean
 }
 
 
