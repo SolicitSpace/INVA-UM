@@ -24,7 +24,6 @@ import { db } from '../../data/db';
 export class WidgetDetailsComponent implements OnInit {
   widgetData: WidgetDataM = this.selectedWidgetService.getWidgetData();
 
-
   statusVal: string = 'NA';
   typeVal: string = 'NA';
   timeRemaining: string = 'NA';
@@ -34,7 +33,7 @@ export class WidgetDetailsComponent implements OnInit {
   constructor(
     private selectedWidgetService: SelectedWidgetService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     // tmp disabled to dev calendar
@@ -58,22 +57,17 @@ export class WidgetDetailsComponent implements OnInit {
       : moment().format('DD-MM-yyyy');
   }
   setUpCalendarEvt() {
-
     // console.log(
     //   '===> ',
     //   moment(this.createdOn, 'DD-MM-yyyy').toDate(),
     //   moment(this.targetDate, 'DD-MM-yyyy').toDate()
     // );
 
-    console.log("=> ", this.widgetData.performed_on)
-
+    console.log('=> ', this.widgetData.performed_on);
 
     // Works for countdown since it has a target date
 
     // For streaks and last since we hav eto manually punch in dates
-
-
-
   }
 
   setTimeRemaining() {
@@ -122,7 +116,6 @@ export class WidgetDetailsComponent implements OnInit {
   // }
 
   handleInvalidState() {
-
     if (!this.selectedWidgetService.getWidgetData())
       this.router.navigate(['home']);
   }
