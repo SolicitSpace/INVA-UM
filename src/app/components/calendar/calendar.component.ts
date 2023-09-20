@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import * as moment from 'moment';
 import { calendarDayT } from '../../data/types';
+import { WidgetDataM } from 'src/app/data/db';
 
 @Component({
   selector: 'app-calendar',
@@ -20,6 +21,10 @@ export class CalendarComponent implements OnInit {
   @Input() createdOn: string = 'NA';
   currDate: string = 'NA';
   @Input() targetDate: string = 'NA';
+
+  // Need to work on this
+  // Will loop in through it
+  @Input() widgetData: WidgetDataM[] = [];
 
   @Output() updatePerformedOnEvt = new EventEmitter<calendarDayT>();
 
