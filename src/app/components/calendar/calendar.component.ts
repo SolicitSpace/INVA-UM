@@ -18,13 +18,13 @@ import { WidgetDataM } from 'src/app/data/db';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit {
-  @Input() createdOn: string = 'NA';
+  createdOn: string = 'NA';
   currDate: string = 'NA';
-  @Input() targetDate: string = 'NA';
+  targetDate: string = 'NA';
 
   // Need to work on this
   // Will loop in through it
-  @Input() widgetData: WidgetDataM[] = [];
+  @Input() widgetsData: WidgetDataM[] = [];
 
   @Output() updatePerformedOnEvt = new EventEmitter<calendarDayT>();
 
@@ -51,12 +51,23 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Creating calendar...');
-    console.log(this.createdOn, this.targetDate);
+    console.log('widgetData : ', this.widgetsData);
+
+    this.formatStartAndEndDates();
 
     this.currDate = this.currSelTimestamp.format('DD-MM-YYYY');
-    console.log(this.currDate);
 
     this.generateCalendar();
+  }
+
+  formatStartAndEndDates() {
+    this.createdOn = moment(this.widgetsData[0].created_on).format(
+      'DD-MM-yyyy'
+    );
+
+    this.targetDate = this.widgetsData[0].target_date
+      ? moment(this.widgetsData[0].target_date).format('DD-MM-yyyy')
+      : moment().format('DD-MM-yyyy');
   }
 
   navMonthForward() {

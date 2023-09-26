@@ -28,10 +28,6 @@
     </div>
   </div>
   <div class="calendar-container">
-    <app-calendar
-      [createdOn]="createdOn"
-      [targetDate]="targetDate"
-      (updatePerformedOnEvt)="setPerformedOnDB($event)"
-    ></app-calendar>
+    <app-calendar [widgetsData]="[widgetData]" (updatePerformedOnEvt)="setPerformedOnDB($event)"></app-calendar>
   </div>
 </div>

@@ -41,7 +41,7 @@ export class WidgetDetailsComponent implements OnInit {
     this.handleInvalidState();
     this.setValueForStatus();
     // this.setValueForType();
-    this.formatStartAndEndDates();
+
     this.setUpCalendarEvt();
 
     if (this.widgetData.target_date) {
@@ -49,13 +49,6 @@ export class WidgetDetailsComponent implements OnInit {
     }
   }
 
-  formatStartAndEndDates() {
-    this.createdOn = moment(this.widgetData.created_on).format('DD-MM-yyyy');
-
-    this.targetDate = this.widgetData.target_date
-      ? moment(this.widgetData.target_date).format('DD-MM-yyyy')
-      : moment().format('DD-MM-yyyy');
-  }
   setUpCalendarEvt() {
     // console.log(
     //   '===> ',
@@ -121,33 +114,29 @@ export class WidgetDetailsComponent implements OnInit {
   }
 
   async setPerformedOnDB(day: calendarDayT) {
-    const data = await db.widgetData.get({id: this.widgetData.id})
-    console.log("day : ", day);
-    console.log("data : ", data?.id);
+    const data = await db.widgetData.get({ id: this.widgetData.id });
+    console.log('day : ', day);
+    console.log('data : ', data?.id);
 
     if (!data) return;
     if (!data.id) return;
 
-    const updData = await db.widgetData.update(data.id, {detail: "temple"})
-    console.log("updData : ", updData);
-    
+    const updData = await db.widgetData.update(data.id, { detail: 'temple' });
+    console.log('updData : ', updData);
 
-
-      // .add({
-      //   // type: parseInt(this.widgetFormGroup.value.widgetType),
-      //   priority_id: this.widgetFormGroup.value.priorityId,
-      //   detail: this.widgetFormGroup.value.detail,
-      //   target_date: this.widgetFormGroup.value.targetDate,
-      //   status: 1, // marking status as ongoing
-      //   color: this.widgetFormGroup.value.color,
-      //   is_highlighted: this.widgetFormGroup.value.isHighlighted,
-      //   created_on: moment().format(),
-      //   last_edited_on: moment().format(),
-      // })
-      // .catch((err) => {
-      //   throw err;
-      // });
+    // .add({
+    //   // type: parseInt(this.widgetFormGroup.value.widgetType),
+    //   priority_id: this.widgetFormGroup.value.priorityId,
+    //   detail: this.widgetFormGroup.value.detail,
+    //   target_date: this.widgetFormGroup.value.targetDate,
+    //   status: 1, // marking status as ongoing
+    //   color: this.widgetFormGroup.value.color,
+    //   is_highlighted: this.widgetFormGroup.value.isHighlighted,
+    //   created_on: moment().format(),
+    //   last_edited_on: moment().format(),
+    // })
+    // .catch((err) => {
+    //   throw err;
+    // });
   }
-
-  
 }
