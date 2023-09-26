@@ -23,28 +23,28 @@
 
   <ng-container *ngFor="let day of days; index as i">
     <!-- Day inside the Timeline range -->
-    <div
-      *ngIf="isBetweenDay(day); else ExternalDay"
-      class="day-cells day-container between-day"
-      [ngClass]="{
+    <div *ngIf="isBetweenDay(day); else ExternalDay" class="day-cells day-container between-day" [ngClass]="{
         'curr-day': day.date === currDate,
         'created-day': day.date === createdOn,
         'target-day': day.date === targetDate
-      }"
-    >
-      <button (click)="openPerformedCtrls(i)" [disabled]="false"></button>
+      }">
+      <!-- <button (click)="openPerformedCtrls(i)" [disabled]="managePerformedBtnState(day)"></button> -->
+      <button (click)="openPerformedCtrls(i)" *ngIf="isPerformedBtnAllowed(day)"></button>
       <p>{{ day.dayOfMonth }}</p>
       <div class="isPerformed-container">
+        <img [src]="setDayPerformedStatus(day)" />
+
+
         <!-- <img src="./assets/fa/check-solid.svg" /> -->
         <!-- <img src="./assets/fa/skull-solid.svg" /> -->
         <!-- <img src="./assets/fa/xmark-solid.svg" /> -->
       </div>
 
       <div class="performed-ctrls-container" *ngIf="day.isPerfCtrlOn">
-        <button (click)="setPerformedStatus(false, day)">
+        <button (click)="setPerformedStatus(i, false, day)">
           <img src="./assets/fa/xmark-solid.svg" />
         </button>
-        <button (click)="setPerformedStatus(true, day)">
+        <button (click)="setPerformedStatus(i, true, day)">
           <img src="./assets/fa/check-solid.svg" />
         </button>
       </div>

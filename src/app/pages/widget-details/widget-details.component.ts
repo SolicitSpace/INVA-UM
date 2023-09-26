@@ -121,7 +121,34 @@ export class WidgetDetailsComponent implements OnInit {
     if (!data) return;
     if (!data.id) return;
 
-    const updData = await db.widgetData.update(data.id, { detail: 'temple' });
+    // get the curr list
+    console.log(this.widgetData, this.widgetData.performed_on);
+
+    if (day.isPerformed) {
+      // If the date is already entered then don't add again
+      if (this.widgetData.performed_on?.includes(day.date)) {
+        console.log('Day already marked.');
+
+        return;
+      }
+
+      // add the date in the array
+      this.widgetData.performed_on?.push(day.date);
+    } else {
+      // check if the arr consist the element
+      if (!this.widgetData.performed_on?.includes(day.date)) {
+        console.log('Day was never marked to unmark it.');
+        return;
+      }
+      // remove the date from array
+      const index: number = this.widgetData.performed_on.indexOf(day.date);
+      this.widgetData.performed_on?.splice(index, 1);
+    }
+
+    // update in the db
+    const updData = await db.widgetData.update(data.id, {
+      performed_on: this.widgetData.performed_on,
+    });
     console.log('updData : ', updData);
 
     // .add({

@@ -27,7 +27,7 @@ export interface WidgetDataM {
   detail: string;
   target_date?: string;
   status: number;
-  performed_on?: number[];
+  performed_on?: string[];
   priority_id: number;
   is_highlighted: boolean;
   color: string;
@@ -100,11 +100,11 @@ export class AppDB extends Dexie {
     ]);
   }
   async stressTestWidgetTable() {
-    let performedOn = [];
+    // let performedOn = [];
 
-    for (let i = 0; i < 365 * 10; i++) performedOn.push(1693022081 + i);
+    // for (let i = 0; i < 365 * 10; i++) performedOn.push(1693022081 + i);
 
-    console.log('performedOn : ', performedOn);
+    // console.log('performedOn : ', performedOn);
 
     let widgets = [];
     for (let i = 0; i < 1000; i++) {
@@ -112,7 +112,7 @@ export class AppDB extends Dexie {
         detail: 'synapse ' + i,
         target_date: '',
         status: 1,
-        performed_on: performedOn,
+        performed_on: [],
         priority_id: 1,
         is_highlighted: true,
         color: 'yellow',
@@ -134,11 +134,11 @@ export class AppDB extends Dexie {
   
 
   async generateWidgetTable() {
-    let performedOn = [];
+    // let performedOn = [];
 
     let someDate, targetDate, createdOnDate;
     for (let i = 0; i < 6; i++) {
-      performedOn.push(1693022081 + i);
+      // performedOn.push(1693022081 + i);
 
       someDate = new Date();
       targetDate = (i < 4) ? moment().add(this.getRandomInt(0, 20), 'days').format() : '';
@@ -148,7 +148,7 @@ export class AppDB extends Dexie {
         detail: 'Task no. ' + i,
         target_date: targetDate,
         status: 1,
-        performed_on: performedOn,
+        performed_on: [],
         priority_id: 1,
         is_highlighted: true,
         color: 'yellow',

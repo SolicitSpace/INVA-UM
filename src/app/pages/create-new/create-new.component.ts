@@ -30,18 +30,16 @@ export class CreateNewComponent {
       targetDate: [''],
       priorityId: [1, Validators.required],
       isHighlighted: [false],
-      color: ['']
+      color: [''],
     },
     {
       validators: [this.customValidator],
     }
   );
-clicked() {
-
-  console.log(this.widgetFormGroup.value);
-}
+  clicked() {
+    console.log(this.widgetFormGroup.value);
+  }
   customValidator(formGroup: FormGroup): ValidationErrors | null {
-    
     if (!formGroup.value.detail) return null;
     if (formGroup.value.detail.trim() == '')
       return { detail_error: 'Detail cannot be empty' };
@@ -76,6 +74,7 @@ clicked() {
         detail: this.widgetFormGroup.value.detail,
         target_date: this.widgetFormGroup.value.targetDate,
         status: 1, // marking status as ongoing
+        performed_on: [],
         color: this.widgetFormGroup.value.color,
         is_highlighted: this.widgetFormGroup.value.isHighlighted,
         created_on: moment().format(),
@@ -93,7 +92,7 @@ clicked() {
   }
 
   isFormInvalid(): boolean {
-    console.log(this.widgetFormGroup)
-    return this.widgetFormGroup.status==='INVALID';
+    console.log(this.widgetFormGroup);
+    return this.widgetFormGroup.status === 'INVALID';
   }
 }

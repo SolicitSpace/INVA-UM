@@ -131,9 +131,32 @@ export class CalendarComponent implements OnInit {
     }));
     this.days[index].isPerfCtrlOn = true;
   }
-  setPerformedStatus(isPerformed: boolean, day: calendarDayT) {
+  setPerformedStatus(index: number, isPerformed: boolean, day: calendarDayT) {
     day.isPerformed = isPerformed;
     // need the parent array
     this.updatePerformedOnEvt.emit(day);
+
+    // Close
+    this.days[index].isPerfCtrlOn = false;
+    setTimeout(() => {
+      this.cdRef.detectChanges();
+    }, 10);
+  }
+
+  setDayPerformedStatus(day: calendarDayT) {
+    console.log('day : ', day);
+    // 1st If marked
+    // 2nd If unmarked
+    //  date in future; leave it
+    //  date in past; mark as cross/skull
+    return this.widgetsData[0].performed_on?.includes(day.date)
+      ? './assets/fa/check-solid.svg'
+      : day.timestamp.unix() > moment().unix()
+      ? ''
+      : './assets/fa/skull-solid.svg';
+  }
+
+  isPerformedBtnAllowed(day: calendarDayT) {
+    return day.timestamp.unix() <= moment().unix();
   }
 }
