@@ -1,4 +1,4 @@
-@import url('hamburgers/dist/hamburgers.min.css');
+@import url("hamburgers/dist/hamburgers.min.css");
 
 .header-container {
   position: relative;
@@ -44,4 +44,63 @@
       }
     }
   }
+}
+
+.bgmenu-container {
+  position: absolute;
+  top: 0;
+  right: -30vw;
+  height: 100%;
+  width: 30vw;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 100;
+  transition: all 0.25s 0.2s ease-in;
+
+  .bgMenuClose-btn {
+    background-color: black;
+    button {
+      // background: red;
+      span {
+        span {
+          background: white;
+          &::before, &::after {
+            background: white;
+          }
+        }
+      }
+    }
+  }
+
+  .bgmenu-menu-container {
+    display: flex;
+    flex-direction: column;
+
+    .bgmenu-item {
+      position: relative;
+      background-color: #252525;
+      margin: 1% 2%;
+      cursor: pointer;
+      p {
+        color: white;
+        font-size: 1.8vw;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      &:hover {
+        background-color: #303030;
+      }
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+
+    .bgmenu-item-active {
+      background-color: #9b9a9a;
+    }
+  }
+}
+
+.bgmenu-container-open {
+  transform: translateX(-30vw);
 }
