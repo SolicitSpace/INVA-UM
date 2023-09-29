@@ -5,7 +5,14 @@
             <img src="./assets/fa/angular.svg" alt="Logo" (mouseup)="navToHomePage()">
         </div>
         <div class="logout-container">
-            <img src="./assets/fa/power-off.svg" alt="Logout" (mouseup)="onLogout()">
+            <!-- <img src="./assets/fa/power-off.svg" alt="Logout" (mouseup)="onLogout()"> -->
+
+            <button class="hamburger hamburger--slider" [ngClass]="isBgMenuOpen ? 'is-active' : ''"
+                type="button" (click)="toggleBgMenu()">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
         </div>
     </div>
 </div>

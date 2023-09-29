@@ -17,4 +17,9 @@ export class HeaderBarComponent {
   navToHomePage() {
     this.router.navigate(['home']);
   }
+
+  isBgMenuOpen: boolean = false;
+  toggleBgMenu() {
+    this.isBgMenuOpen = !this.isBgMenuOpen
+  }
 }
