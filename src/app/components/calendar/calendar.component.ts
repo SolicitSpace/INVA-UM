@@ -50,9 +50,6 @@ export class CalendarComponent implements OnInit {
   constructor(private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    console.log('Creating calendar...');
-    console.log('widgetData : ', this.widgetsData);
-
     this.formatStartAndEndDates();
 
     this.currDate = this.currSelTimestamp.format('DD-MM-YYYY');
@@ -143,20 +140,21 @@ export class CalendarComponent implements OnInit {
     }, 10);
   }
 
-  setDayPerformedStatus(day: calendarDayT) {
-    console.log('day : ', day);
+  getDayPerformedStatus(day: calendarDayT) {
+    // console.log('day : ', day);
     // 1st If marked
     // 2nd If unmarked
     //  date in future; leave it
     //  date in past; mark as cross/skull
     return this.widgetsData[0].performed_on?.includes(day.date)
       ? './assets/fa/check-solid.svg'
-      : day.timestamp.endOf('day').unix() > moment().unix()
+      : moment(day.timestamp).endOf('day').unix() > moment().unix()
       ? ''
       : './assets/fa/skull-solid.svg';
   }
 
   isPerformedBtnAllowed(day: calendarDayT) {
-    return day.timestamp.unix() <= moment().endOf('day').unix();
+    // No need of EndOF('day') since day.timestamp always contains the value from startOf('day') 00:00:00
+    return day.timestamp.unix() <= moment().unix();
   }
 }

@@ -32,7 +32,7 @@
       <button (click)="openPerformedCtrls(i)" *ngIf="isPerformedBtnAllowed(day)"></button>
       <p>{{ day.dayOfMonth }}</p>
       <div class="isPerformed-container">
-        <img [src]="setDayPerformedStatus(day)" />
+        <img [src]="getDayPerformedStatus(day)" />
 
 
         <!-- <img src="./assets/fa/check-solid.svg" /> -->
