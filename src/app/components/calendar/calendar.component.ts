@@ -151,12 +151,12 @@ export class CalendarComponent implements OnInit {
     //  date in past; mark as cross/skull
     return this.widgetsData[0].performed_on?.includes(day.date)
       ? './assets/fa/check-solid.svg'
-      : day.timestamp.unix() > moment().unix()
+      : day.timestamp.endOf('day').unix() > moment().unix()
       ? ''
       : './assets/fa/skull-solid.svg';
   }
 
   isPerformedBtnAllowed(day: calendarDayT) {
-    return day.timestamp.unix() <= moment().unix();
+    return day.timestamp.unix() <= moment().endOf('day').unix();
   }
 }
