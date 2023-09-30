@@ -29,7 +29,7 @@ export class WidgetDetailsComponent implements OnInit {
   timeRemaining: string = 'NA';
   createdOn: string = 'NA';
   targetDate: string = 'NA';
-
+  isShowDetailOps: boolean = false;
   constructor(
     private selectedWidgetService: SelectedWidgetService,
     private router: Router
@@ -49,6 +49,9 @@ export class WidgetDetailsComponent implements OnInit {
     }
   }
 
+  toggleDetailOps() {
+    this.isShowDetailOps = !this.isShowDetailOps;
+  }
   setUpCalendarEvt() {
     // console.log(
     //   '===> ',

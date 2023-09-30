@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header-bar.component.scss'],
 })
 export class HeaderBarComponent {
+  
   constructor(private global: GlobalService, private router: Router) {}
 
   onLogout() {

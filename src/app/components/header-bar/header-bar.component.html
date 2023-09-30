@@ -31,7 +31,8 @@
     </div>
 
     <div class="bgmenu-menu-container">
-        <div class="bgmenu-item bgmenu-item-active">
+        <!-- bgmenu-item-active - use this class to denote btn selection -->
+        <div class="bgmenu-item" (click)="navToHomePage(); toggleBgMenu()">
             <p>Home</p>
         </div>
         <div class="bgmenu-item">
