@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, liveQuery } from 'dexie';
-import { db, WidgetDataM, WidgetPriorityM } from '../../data/db';
+import { db, WidgetDataM, WidgetPriorityM, WidgetStatusM } from '../../data/db';
 import * as moment from 'moment';
 import { SelectedWidgetService } from '../../services/selected-widget.service';
 
@@ -24,6 +24,9 @@ export class EditWidgetComponent implements OnInit {
   widgetPriorityList$: Observable<WidgetPriorityM[]> = liveQuery(() =>
     db.widgetPriority.toArray()
   );
+  widgetStatusList$: Observable<WidgetStatusM[]> = liveQuery(() =>
+    db.widgetStatus.toArray()
+  );
   // widgetTypeList$: Observable<WidgetTypeM[]> = liveQuery(() =>
   //   db.widgetType.toArray()
   // );
@@ -35,6 +38,7 @@ export class EditWidgetComponent implements OnInit {
       priorityId: [1, Validators.required],
       isHighlighted: [false],
       color: [''],
+      statusId: [1, Validators.required]
     },
     {
       validators: [this.customValidator],
@@ -67,20 +71,20 @@ export class EditWidgetComponent implements OnInit {
     private selectedWidgetService: SelectedWidgetService
   ) {}
   ngOnInit(): void {
+    console.log('widgetData : ', this.widgetData);
 
-    this.setWidgetCurrentValues();  
+    this.setWidgetCurrentValues();
   }
 
   setWidgetCurrentValues() {
     this.widgetFormGroup.patchValue({
       detail: this.widgetData.detail,
-      targetDate: this.widgetData.target_date,
+      targetDate: moment(this.widgetData.target_date).format('yyyy-MM-DD'),
       priorityId: this.widgetData.priority_id,
       isHighlighted: this.widgetData.is_highlighted,
       color: this.widgetData.color,
+      statusId: this.widgetData.status
     });
-
-    // Will have to figure out how to apply values properly to all fields
   }
 
   cancelAndBack() {
@@ -89,31 +93,38 @@ export class EditWidgetComponent implements OnInit {
     this.router.navigate(['home']);
   }
 
-  async createWidget() {
+  async updateWidget() {
     //
     console.log(this.widgetFormGroup);
-    const widgetId = await db.widgetData
-      .add({
+
+    if (!this.widgetData.id) {
+      alert('Invalid Widget!');
+      return;
+    }
+    await db.widgetData
+      .update(this.widgetData.id, {
         // type: parseInt(this.widgetFormGroup.value.widgetType),
         priority_id: this.widgetFormGroup.value.priorityId,
         detail: this.widgetFormGroup.value.detail,
         target_date: this.widgetFormGroup.value.targetDate,
-        status: 1, // marking status as ongoing
-        performed_on: [],
+        status: this.widgetFormGroup.value.statusId, // marking status as ongoing
         color: this.widgetFormGroup.value.color,
         is_highlighted: this.widgetFormGroup.value.isHighlighted,
         created_on: moment().format(),
         last_edited_on: moment().format(),
       })
+      .then(() => {
+        alert(`Widget was updated successfully.`);
+        this.widgetFormGroup.reset({
+          widgetType: '',
+          detail: '',
+          targetDate: '',
+        });
+        this.router.navigate(['widget-details']);
+      })
       .catch((err) => {
         throw err;
       });
-
-    alert(
-      `Widget was created successfully. \nYou've created ${widgetId} widget till now. \nKeep it up!`
-    );
-
-    this.widgetFormGroup.reset({ widgetType: '', detail: '', targetDate: '' });
   }
 
   isFormInvalid(): boolean {

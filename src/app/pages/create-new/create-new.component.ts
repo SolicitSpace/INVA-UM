@@ -14,7 +14,7 @@ import * as moment from 'moment';
   selector: 'app-create-new',
   templateUrl: './create-new.component.html',
   styleUrls: ['./create-new.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,    // to prevent calling the isFormValid method periodically
+  changeDetection: ChangeDetectionStrategy.OnPush, // to prevent calling the isFormValid method periodically
 })
 export class CreateNewComponent {
   // contains only the types of widgets
@@ -68,7 +68,7 @@ export class CreateNewComponent {
   async createWidget() {
     //
     console.log(this.widgetFormGroup);
-    const widgetId = await db.widgetData
+    await db.widgetData
       .add({
         // type: parseInt(this.widgetFormGroup.value.widgetType),
         priority_id: this.widgetFormGroup.value.priorityId,
@@ -81,15 +81,19 @@ export class CreateNewComponent {
         created_on: moment().format(),
         last_edited_on: moment().format(),
       })
+      .then(() => {
+        alert(`Widget was created successfully. \nKeep it up!`);
+        this.widgetFormGroup.reset({
+          widgetType: '',
+          detail: '',
+          targetDate: '',
+        });
+        this.router.navigate(['home']);
+
+      })
       .catch((err) => {
         throw err;
       });
-
-    alert(
-      `Widget was created successfully. \nYou've created ${widgetId} widget till now. \nKeep it up!`
-    );
-
-    this.widgetFormGroup.reset({ widgetType: '', detail: '', targetDate: '' });
   }
 
   isFormInvalid(): boolean {

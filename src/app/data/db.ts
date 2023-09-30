@@ -124,11 +124,12 @@ export class AppDB extends Dexie {
 
       await db.widgetData.add({
         detail: 'Debug Task no. ' + i,
+        // status: this.getRandomInt(1, 5),
         status: 1,
         performed_on: [],
-        priority_id: 1,
+        priority_id: this.getRandomInt(1, 4),
         is_highlighted: true,
-        color: 'yellow',
+        color: '#000000',
         created_on: createdOnDate,
         target_date: targetDate,
         last_edited_on: createdOnDate,

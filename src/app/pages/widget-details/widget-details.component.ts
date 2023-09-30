@@ -15,11 +15,9 @@ export class WidgetDetailsComponent implements OnInit {
   widgetData: WidgetDataM = this.selectedWidgetService.getWidgetData();
 
   statusVal: string = 'NA';
-  typeVal: string = 'NA';
   timeRemaining: string = 'NA';
-  createdOn: string = 'NA';
-  targetDate: string = 'NA';
   isShowDetailOps: boolean = false;
+  
   constructor(
     private selectedWidgetService: SelectedWidgetService,
     private router: Router
@@ -93,13 +91,6 @@ export class WidgetDetailsComponent implements OnInit {
     this.statusVal = statusObj[0].value;
   }
 
-  // async setValueForType() {
-  //   const typeObj: WidgetTypeM[] = await db.widgetType
-  //     .where({ id: this.widgetData.type })
-  //     .toArray();
-
-  //   this.typeVal = typeObj[0].value;
-  // }
 
   handleInvalidState() {
     if (!this.selectedWidgetService.getWidgetData())
