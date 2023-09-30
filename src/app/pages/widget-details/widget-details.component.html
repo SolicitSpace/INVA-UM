@@ -9,10 +9,10 @@
   </div>
 
   <div class="details-ops-container" *ngIf="isShowDetailOps">
-    <div class="details-ops">
+    <div class="details-ops" (click)="openWidgetEditor()">
       <p>Edit</p>
     </div>
-    <div class="details-ops">
+    <div class="details-ops" (click)="showDeleteWidgetPrompt()">
       <p>Delete</p>
     </div>
   </div>

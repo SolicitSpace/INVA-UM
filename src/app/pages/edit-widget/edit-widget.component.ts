@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,16 +7,19 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, liveQuery } from 'dexie';
-import { db, WidgetPriorityM } from '../../data/db';
+import { db, WidgetDataM, WidgetPriorityM } from '../../data/db';
 import * as moment from 'moment';
+import { SelectedWidgetService } from '../../services/selected-widget.service';
 
 @Component({
-  selector: 'app-create-new',
-  templateUrl: './create-new.component.html',
-  styleUrls: ['./create-new.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,    // to prevent calling the isFormValid method periodically
+  selector: 'app-edit-widget',
+  templateUrl: './edit-widget.component.html',
+  styleUrls: ['./edit-widget.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush, // to prevent calling the isFormValid method periodically
 })
-export class CreateNewComponent {
+export class EditWidgetComponent implements OnInit {
+  widgetData: WidgetDataM = this.selectedWidgetService.getWidgetData();
+
   // contains only the types of widgets
   widgetPriorityList$: Observable<WidgetPriorityM[]> = liveQuery(() =>
     db.widgetPriority.toArray()
@@ -37,6 +40,7 @@ export class CreateNewComponent {
       validators: [this.customValidator],
     }
   );
+
   clicked() {
     console.log(this.widgetFormGroup.value);
   }
@@ -57,7 +61,27 @@ export class CreateNewComponent {
     return null;
   }
 
-  constructor(private router: Router, private fb: FormBuilder) {}
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private selectedWidgetService: SelectedWidgetService
+  ) {}
+  ngOnInit(): void {
+
+    this.setWidgetCurrentValues();  
+  }
+
+  setWidgetCurrentValues() {
+    this.widgetFormGroup.patchValue({
+      detail: this.widgetData.detail,
+      targetDate: this.widgetData.target_date,
+      priorityId: this.widgetData.priority_id,
+      isHighlighted: this.widgetData.is_highlighted,
+      color: this.widgetData.color,
+    });
+
+    // Will have to figure out how to apply values properly to all fields
+  }
 
   cancelAndBack() {
     // clearing the fields

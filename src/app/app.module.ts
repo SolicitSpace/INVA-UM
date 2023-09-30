@@ -20,9 +20,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WidgetDetailsComponent } from './pages/widget-details/widget-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import * as moment from 'moment';
 import { WidgetComponent } from './components/widget/widget.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { EditWidgetComponent } from './pages/edit-widget/edit-widget.component';
 
 
 @NgModule({
@@ -44,6 +44,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     WidgetDetailsComponent,
     WidgetComponent,
     CalendarComponent,
+    EditWidgetComponent,
   ],
   imports: [
     BrowserModule,

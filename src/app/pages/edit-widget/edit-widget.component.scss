@@ -1,0 +1,66 @@
+form {
+    .field-container {
+      position: relative;
+      margin: 1rem 1rem;
+      // border: solid;
+      label {
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+      input {
+        margin: 0.25rem 0;
+        font-size: 1.2rem;
+        width: 100%;
+      }
+      select {
+        margin: 0.25rem 0;
+        font-size: 1.2rem;
+        width: 100%;
+      }
+  
+      .priority-btns-container {
+        display: flex;
+        .radiobtn-container {
+          display: flex;
+          margin: 0 5% 0 0;
+  
+          label {
+            margin: 0 6px 0;
+          }
+        }
+      }
+    }
+    .checkbox-container {
+      input {
+        width: auto;
+        margin: 0 4%;
+      }
+      p {
+        font-size: 0.75rem;
+        font-weight: 100;
+        margin: 0;
+      }
+    }
+    .color-container {
+      input {
+        width: 2.4rem;
+        margin: 0 4%;
+      }
+      p {
+        font-size: 0.75rem;
+        font-weight: 100;
+        margin: 0;
+      }
+    }
+  
+    .btns-container {
+      display: flex;
+      justify-content: space-between;
+      margin: 1rem 1rem;
+  
+      button {
+        font-size: 1.2rem;
+      }
+    }
+  }
+  

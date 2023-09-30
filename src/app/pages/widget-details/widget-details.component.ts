@@ -3,16 +3,6 @@ import { SelectedWidgetService } from '../../services/selected-widget.service';
 import { Router } from '@angular/router';
 // import { WidgetDataM, WidgetStatusM, WidgetTypeM } from 'src/app/data/db';
 import { WidgetDataM, WidgetStatusM, db } from 'src/app/data/db';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
 import * as moment from 'moment';
 import { calendarDayT } from 'src/app/data/types';
 
@@ -168,5 +158,29 @@ export class WidgetDetailsComponent implements OnInit {
     // .catch((err) => {
     //   throw err;
     // });
+  }
+
+  openWidgetEditor() {
+    this.router.navigate(['edit-widget']);
+  }
+
+  showDeleteWidgetPrompt() {
+    // will show the prompt later
+    if (confirm(`Are you sure you want to delete "${this.widgetData.detail}" widget?`))
+      this.deleteWidgetPrompt();
+  }
+  deleteWidgetPrompt() {
+    console.log(this.widgetData);
+    if (this.widgetData.id) {
+      db.widgetData
+        .delete(this.widgetData.id)
+        .then((data) => {
+          alert('Widget Deleted Successfully! ');
+          this.router.navigate(['home']);
+        })
+        .catch((err) => alert(err));
+
+      
+    } else alert('Invalid Widget');
   }
 }
