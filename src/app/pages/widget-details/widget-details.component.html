@@ -26,9 +26,9 @@
       </div>
       <div class="label-container">
         <p>Type:</p>
-        <p>{{ 0 }}</p>
+        <p>{{ widgetData.target_date ? 'Countdown' : 'Countup' }}</p>
       </div>
-      <div class="label-container">
+      <div class="label-container" *ngIf="widgetData.target_date">
         <p>Target Date:</p>
         <p>{{ widgetData.target_date }}</p>
       </div>
@@ -38,11 +38,15 @@
       </div>
       <div class="label-container">
         <p>Status:</p>
-        <p>{{ widgetData.status }}</p>
+        <p>{{ this.statusVal }}</p>
+      </div>
+      <div class="label-container">
+        <p>Priority:</p>
+        <p>{{ priorityVal }}</p>
       </div>
       <div class="label-container">
         <p>Created On:</p>
-        <p>{{ widgetData.created_on }}</p>
+        <p>{{ createdOn }}</p>
       </div>
     </div>
     <div class="calendar-container">

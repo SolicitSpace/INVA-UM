@@ -2,9 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { SelectedWidgetService } from '../../services/selected-widget.service';
 import { Router } from '@angular/router';
 // import { WidgetDataM, WidgetStatusM, WidgetTypeM } from 'src/app/data/db';
-import { WidgetDataM, WidgetStatusM, db } from 'src/app/data/db';
+import {
+  WidgetDataM,
+  WidgetPriorityM,
+  WidgetStatusM,
+  db,
+} from 'src/app/data/db';
 import * as moment from 'moment';
 import { calendarDayT } from 'src/app/data/types';
+import { Observable, liveQuery } from 'dexie';
 
 @Component({
   selector: 'app-widget-details',
@@ -14,10 +20,19 @@ import { calendarDayT } from 'src/app/data/types';
 export class WidgetDetailsComponent implements OnInit {
   widgetData: WidgetDataM = this.selectedWidgetService.getWidgetData();
 
+  widgetPriorityList$: Observable<WidgetPriorityM[]> = liveQuery(() =>
+    db.widgetPriority.toArray()
+  );
+  widgetStatusList$: Observable<WidgetStatusM[]> = liveQuery(() =>
+    db.widgetStatus.toArray()
+  );
+
   statusVal: string = 'NA';
+  priorityVal: string = 'NA';
   timeRemaining: string = 'NA';
+  createdOn: string = "NA"
   isShowDetailOps: boolean = false;
-  
+
   constructor(
     private selectedWidgetService: SelectedWidgetService,
     private router: Router
@@ -28,7 +43,9 @@ export class WidgetDetailsComponent implements OnInit {
     // return;
     this.handleInvalidState();
     this.setValueForStatus();
+    this.setValueForPriority();
     // this.setValueForType();
+    this.createdOn = moment(this.widgetData.created_on).format("DD-MM-yyyy")
 
     this.setUpCalendarEvt();
 
@@ -83,14 +100,21 @@ export class WidgetDetailsComponent implements OnInit {
   }
 
   async setValueForStatus() {
-    const statusObj: WidgetStatusM[] = await db.widgetStatus
+    const obj: WidgetStatusM[] = await db.widgetStatus
       .where({ id: this.widgetData.status })
       .toArray();
 
-    console.log(statusObj);
-    this.statusVal = statusObj[0].value;
+    console.log(obj);
+    this.statusVal = obj[0].value;
   }
+  async setValueForPriority() {
+    const obj: WidgetPriorityM[] = await db.widgetPriority
+      .where({ id: this.widgetData.priority_id })
+      .toArray();
 
+    console.log(obj);
+    this.priorityVal = obj[0].value;
+  }
 
   handleInvalidState() {
     if (!this.selectedWidgetService.getWidgetData())
@@ -157,7 +181,11 @@ export class WidgetDetailsComponent implements OnInit {
 
   showDeleteWidgetPrompt() {
     // will show the prompt later
-    if (confirm(`Are you sure you want to delete "${this.widgetData.detail}" widget?`))
+    if (
+      confirm(
+        `Are you sure you want to delete "${this.widgetData.detail}" widget?`
+      )
+    )
       this.deleteWidgetPrompt();
   }
   deleteWidgetPrompt() {
@@ -170,8 +198,6 @@ export class WidgetDetailsComponent implements OnInit {
           this.router.navigate(['home']);
         })
         .catch((err) => alert(err));
-
-      
     } else alert('Invalid Widget');
   }
 }
