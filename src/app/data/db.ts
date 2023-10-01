@@ -27,7 +27,7 @@ export interface WidgetDataM {
   detail: string;
   target_date?: string;
   status: number;
-  performed_on?: number[];
+  performed_on?: string[];
   priority_id: number;
   is_highlighted: boolean;
   color: string;
@@ -63,7 +63,7 @@ export class AppDB extends Dexie {
     // Populating `Widget Priority` Table data
     this.generateWidgetPriorityTable();
 
-    this.generateWidgetTable();
+    this.generateWidgetTableDebug();
 
     // this.stressTestWidgetTable();
 
@@ -99,12 +99,50 @@ export class AppDB extends Dexie {
       },
     ]);
   }
+
+  getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  }
+
+  async generateWidgetTableDebug() {
+    // let performedOn = [];
+
+    let createdOnDate, targetDate;
+    const lim = 5
+    for (let i = 1; i < lim; i++) {
+      // performedOn.push(1693022081 + i);
+
+      createdOnDate = moment()
+        .subtract(this.getRandomInt(0, 20), 'days')
+        .format();
+      targetDate =
+        i < Math.round(lim / 2)
+          ? moment().add(this.getRandomInt(0, 20), 'days').format()
+          : '';
+
+      await db.widgetData.add({
+        detail: 'Debug Task no. ' + i,
+        // status: this.getRandomInt(1, 5),
+        status: 1,
+        performed_on: [],
+        priority_id: this.getRandomInt(1, 4),
+        is_highlighted: true,
+        color: '#000000',
+        created_on: createdOnDate,
+        target_date: targetDate,
+        last_edited_on: createdOnDate,
+      });
+    }
+  }
+
   async stressTestWidgetTable() {
-    let performedOn = [];
+    // let performedOn = [];
 
-    for (let i = 0; i < 365 * 10; i++) performedOn.push(1693022081 + i);
+    // for (let i = 0; i < 365 * 10; i++) performedOn.push(1693022081 + i);
 
-    console.log('performedOn : ', performedOn);
+    // console.log('performedOn : ', performedOn);
 
     let widgets = [];
     for (let i = 0; i < 1000; i++) {
@@ -112,7 +150,7 @@ export class AppDB extends Dexie {
         detail: 'synapse ' + i,
         target_date: '',
         status: 1,
-        performed_on: performedOn,
+        performed_on: [],
         priority_id: 1,
         is_highlighted: true,
         color: 'yellow',
@@ -123,40 +161,5 @@ export class AppDB extends Dexie {
     console.log('widgets : ', widgets);
     await db.widgetData.bulkAdd(widgets);
   }
-
-
-  getRandomInt(min: number, max: number) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-  }
-  
-  
-
-  async generateWidgetTable() {
-    let performedOn = [];
-
-    let someDate, targetDate, createdOnDate;
-    for (let i = 0; i < 6; i++) {
-      performedOn.push(1693022081 + i);
-
-      someDate = new Date();
-      targetDate = (i < 4) ? moment().add(this.getRandomInt(0, 20), 'days').format() : '';
-      createdOnDate = moment().add(this.getRandomInt(0, 20), 'days').format();
-
-      await db.widgetData.add({
-        detail: 'Task no. ' + i,
-        target_date: targetDate,
-        status: 1,
-        performed_on: performedOn,
-        priority_id: 1,
-        is_highlighted: true,
-        color: 'yellow',
-        created_on: createdOnDate,
-        last_edited_on: createdOnDate,
-      });
-    }
-  }
 }
-
 export const db = new AppDB();

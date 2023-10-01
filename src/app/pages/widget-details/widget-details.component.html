@@ -1,36 +1,56 @@
-<p class="page-title">Widget Details</p>
+<div class="details-panel-container">
+  <div class="details-header-container">
+    <div class="page-title">
+      <p>Widget Details</p>
+    </div>
+    <div class="menu-btn" (click)="toggleDetailOps()">
+      <img src="./assets/fa/ellipsis-vertical-solid.svg" />
+    </div>
+  </div>
+
+  <div class="details-ops-container" *ngIf="isShowDetailOps">
+    <div class="details-ops" (click)="openWidgetEditor()">
+      <p>Edit</p>
+    </div>
+    <div class="details-ops" (click)="showDeleteWidgetPrompt()">
+      <p>Delete</p>
+    </div>
+  </div>
 
 
-<div class="details-container">
+  <div class="details-container">
     <div class="info-container">
-        <div class="label-container">
-            <p>Name: </p>
-            <p>{{ widgetData.detail }}</p>
-        </div>
-        <div class="label-container">
-            <p>Type: </p>
-            <p>{{ typeVal }}</p>
-        </div>
-        <div class="label-container">
-            <p>Target Date: </p>
-            <p>{{ targetDate }}</p>
-        </div>
-        <div class="label-container">
-            <p>Time Remaining: </p>
-            <p>{{ timeRemaining }}</p>
-        </div>
-        <div class="label-container">
-            <p>Status: </p>
-            <p>{{ statusVal }}</p>
-        </div>
-        <div class="label-container">
-            <p>Created On: </p>
-            <p>{{ createdOn }}</p>
-        </div>
+      <div class="label-container">
+        <p>Name:</p>
+        <p>{{ widgetData.detail }}</p>
+      </div>
+      <div class="label-container">
+        <p>Type:</p>
+        <p>{{ widgetData.target_date ? 'Countdown' : 'Countup' }}</p>
+      </div>
+      <div class="label-container" *ngIf="widgetData.target_date">
+        <p>Target Date:</p>
+        <p>{{ widgetData.target_date }}</p>
+      </div>
+      <div class="label-container">
+        <p>Time Remaining:</p>
+        <p>{{ timeRemaining }}</p>
+      </div>
+      <div class="label-container">
+        <p>Status:</p>
+        <p>{{ this.statusVal }}</p>
+      </div>
+      <div class="label-container">
+        <p>Priority:</p>
+        <p>{{ priorityVal }}</p>
+      </div>
+      <div class="label-container">
+        <p>Created On:</p>
+        <p>{{ createdOn }}</p>
+      </div>
     </div>
     <div class="calendar-container">
-        <app-calendar [events]="calendarEvt"></app-calendar>
+      <app-calendar [widgetsData]="[widgetData]" (updatePerformedOnEvt)="setPerformedOnDB($event)"></app-calendar>
     </div>
-
-
+  </div>
 </div>

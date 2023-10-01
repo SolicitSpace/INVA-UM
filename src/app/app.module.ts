@@ -14,21 +14,16 @@ import { CreateNewWidgetComponent } from './components/create-new-widget/create-
 import { CountdownWidgetComponent } from './components/countdown-widget/countdown-widget.component';
 import { CountupWidgetComponent } from './components/countup-widget/countup-widget.component';
 import { LastPerformedOnWidgetComponent } from './components/last-performed-on-widget/last-performed-on-widget.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { SuperscriptPipe } from './pipes/superscript.pipe';
 import { LimitDecimalsPipe } from './pipes/limit-decimals.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WidgetDetailsComponent } from './pages/widget-details/widget-details.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/moment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import * as moment from 'moment';
 import { WidgetComponent } from './components/widget/widget.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { EditWidgetComponent } from './pages/edit-widget/edit-widget.component';
 
-export function momentAdapterFactory() {
-  return adapterFactory(moment);
-}
 
 @NgModule({
   declarations: [
@@ -47,8 +42,9 @@ export function momentAdapterFactory() {
     SuperscriptPipe,
     LimitDecimalsPipe,
     WidgetDetailsComponent,
-    CalendarComponent,
     WidgetComponent,
+    CalendarComponent,
+    EditWidgetComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,10 +52,6 @@ export function momentAdapterFactory() {
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: momentAdapterFactory,
-    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

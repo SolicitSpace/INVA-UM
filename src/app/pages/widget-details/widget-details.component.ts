@@ -2,21 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { SelectedWidgetService } from '../../services/selected-widget.service';
 import { Router } from '@angular/router';
 // import { WidgetDataM, WidgetStatusM, WidgetTypeM } from 'src/app/data/db';
-import { WidgetDataM, WidgetStatusM, WidgetPriorityM } from 'src/app/data/db';
 import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+  WidgetDataM,
+  WidgetPriorityM,
+  WidgetStatusM,
+  db,
+} from 'src/app/data/db';
 import * as moment from 'moment';
-import { db } from '../../data/db';
-import { CalendarEvent } from 'angular-calendar';
-import { EventColor } from 'calendar-utils';
+import { calendarDayT } from 'src/app/data/types';
+import { Observable, liveQuery } from 'dexie';
 
 @Component({
   selector: 'app-widget-details',
@@ -26,12 +20,18 @@ import { EventColor } from 'calendar-utils';
 export class WidgetDetailsComponent implements OnInit {
   widgetData: WidgetDataM = this.selectedWidgetService.getWidgetData();
 
+  widgetPriorityList$: Observable<WidgetPriorityM[]> = liveQuery(() =>
+    db.widgetPriority.toArray()
+  );
+  widgetStatusList$: Observable<WidgetStatusM[]> = liveQuery(() =>
+    db.widgetStatus.toArray()
+  );
+
   statusVal: string = 'NA';
-  typeVal: string = 'NA';
+  priorityVal: string = 'NA';
   timeRemaining: string = 'NA';
-  calendarEvt!: CalendarEvent[];
-  createdOn: string = 'NA';
-  targetDate: string = 'NA';
+  createdOn: string = "NA"
+  isShowDetailOps: boolean = false;
 
   constructor(
     private selectedWidgetService: SelectedWidgetService,
@@ -39,11 +39,14 @@ export class WidgetDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // tmp disabled to dev calendar
+    // return;
     this.handleInvalidState();
-
     this.setValueForStatus();
+    this.setValueForPriority();
     // this.setValueForType();
-    this.formatStartAndEndDates();
+    this.createdOn = moment(this.widgetData.created_on).format("DD-MM-yyyy")
+
     this.setUpCalendarEvt();
 
     if (this.widgetData.target_date) {
@@ -51,62 +54,21 @@ export class WidgetDetailsComponent implements OnInit {
     }
   }
 
-  formatStartAndEndDates() {
-    this.createdOn = moment(this.widgetData.created_on).format('DD-MM-yyyy');
-
-    this.targetDate = this.widgetData.target_date
-      ? moment(this.widgetData.target_date).format('DD-MM-yyyy')
-      : moment().format('DD-MM-yyyy');
+  toggleDetailOps() {
+    this.isShowDetailOps = !this.isShowDetailOps;
   }
   setUpCalendarEvt() {
-    const colors: Record<string, EventColor> = {
-      red: {
-        primary: '#ad2121',
-        secondary: '#FAE3E3',
-      },
-      blue: {
-        primary: '#1e90ff',
-        secondary: '#D1E8FF',
-      },
-      yellow: {
-        primary: '#e3bc08',
-        secondary: '#FDF1BA',
-      },
-    };
-
     // console.log(
     //   '===> ',
     //   moment(this.createdOn, 'DD-MM-yyyy').toDate(),
     //   moment(this.targetDate, 'DD-MM-yyyy').toDate()
     // );
 
-    console.log("=> ", this.widgetData.performed_on)
-    
+    console.log('=> ', this.widgetData.performed_on);
 
     // Works for countdown since it has a target date
 
     // For streaks and last since we hav eto manually punch in dates
-
-
-    this.calendarEvt = [
-      {
-        start: moment(this.createdOn, 'DD-MM-yyyy').toDate(),
-        end: moment(this.targetDate, 'DD-MM-yyyy').toDate(),
-        title: this.widgetData.detail,
-        color: { ...colors['red'] },
-        allDay: true,
-      },
-    ];
-    
-    this.calendarEvt = [
-      {
-        start: moment(this.createdOn, 'DD-MM-yyyy').toDate(),
-        end: moment(this.targetDate, 'DD-MM-yyyy').toDate(),
-        title: this.widgetData.detail,
-        color: { ...colors['red'] },
-        allDay: true,
-      },
-    ];
   }
 
   setTimeRemaining() {
@@ -138,24 +100,104 @@ export class WidgetDetailsComponent implements OnInit {
   }
 
   async setValueForStatus() {
-    const statusObj: WidgetStatusM[] = await db.widgetStatus
+    const obj: WidgetStatusM[] = await db.widgetStatus
       .where({ id: this.widgetData.status })
       .toArray();
 
-    console.log(statusObj);
-    this.statusVal = statusObj[0].value;
+    console.log(obj);
+    this.statusVal = obj[0].value;
   }
+  async setValueForPriority() {
+    const obj: WidgetPriorityM[] = await db.widgetPriority
+      .where({ id: this.widgetData.priority_id })
+      .toArray();
 
-  // async setValueForType() {
-  //   const typeObj: WidgetTypeM[] = await db.widgetType
-  //     .where({ id: this.widgetData.type })
-  //     .toArray();
-
-  //   this.typeVal = typeObj[0].value;
-  // }
+    console.log(obj);
+    this.priorityVal = obj[0].value;
+  }
 
   handleInvalidState() {
     if (!this.selectedWidgetService.getWidgetData())
       this.router.navigate(['home']);
+  }
+
+  async setPerformedOnDB(day: calendarDayT) {
+    const data = await db.widgetData.get({ id: this.widgetData.id });
+    console.log('day : ', day);
+    console.log('data : ', data?.id);
+
+    if (!data) return;
+    if (!data.id) return;
+
+    // get the curr list
+    console.log(this.widgetData, this.widgetData.performed_on);
+
+    if (day.isPerformed) {
+      // If the date is already entered then don't add again
+      if (this.widgetData.performed_on?.includes(day.date)) {
+        console.log('Day already marked.');
+
+        return;
+      }
+
+      // add the date in the array
+      this.widgetData.performed_on?.push(day.date);
+    } else {
+      // check if the arr consist the element
+      if (!this.widgetData.performed_on?.includes(day.date)) {
+        console.log('Day was never marked to unmark it.');
+        return;
+      }
+      // remove the date from array
+      const index: number = this.widgetData.performed_on.indexOf(day.date);
+      this.widgetData.performed_on?.splice(index, 1);
+    }
+
+    // update in the db
+    const updData = await db.widgetData.update(data.id, {
+      performed_on: this.widgetData.performed_on,
+    });
+    console.log('updData : ', updData);
+
+    // .add({
+    //   // type: parseInt(this.widgetFormGroup.value.widgetType),
+    //   priority_id: this.widgetFormGroup.value.priorityId,
+    //   detail: this.widgetFormGroup.value.detail,
+    //   target_date: this.widgetFormGroup.value.targetDate,
+    //   status: 1, // marking status as ongoing
+    //   color: this.widgetFormGroup.value.color,
+    //   is_highlighted: this.widgetFormGroup.value.isHighlighted,
+    //   created_on: moment().format(),
+    //   last_edited_on: moment().format(),
+    // })
+    // .catch((err) => {
+    //   throw err;
+    // });
+  }
+
+  openWidgetEditor() {
+    this.router.navigate(['edit-widget']);
+  }
+
+  showDeleteWidgetPrompt() {
+    // will show the prompt later
+    if (
+      confirm(
+        `Are you sure you want to delete "${this.widgetData.detail}" widget?`
+      )
+    )
+      this.deleteWidgetPrompt();
+  }
+  deleteWidgetPrompt() {
+    console.log(this.widgetData);
+    if (this.widgetData.id) {
+      db.widgetData
+        .delete(this.widgetData.id)
+        .then((data) => {
+          alert('Widget Deleted Successfully! ');
+          this.router.navigate(['home']);
+        })
+        .catch((err) => alert(err));
+    } else alert('Invalid Widget');
   }
 }

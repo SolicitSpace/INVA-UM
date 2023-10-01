@@ -5,7 +5,44 @@
             <img src="./assets/fa/angular.svg" alt="Logo" (mouseup)="navToHomePage()">
         </div>
         <div class="logout-container">
-            <img src="./assets/fa/power-off.svg" alt="Logout" (mouseup)="onLogout()">
+            <!-- <img src="./assets/fa/power-off.svg" alt="Logout" (mouseup)="onLogout()"> -->
+
+            <button class="hamburger hamburger--slider" [ngClass]="isBgMenuOpen ? 'is-active' : ''" type="button"
+                (click)="toggleBgMenu()">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="bgmenu-container" [ngClass]="isBgMenuOpen ? 'bgmenu-container-open' : ''">
+
+    <div class="bgMenuClose-btn">
+
+        <button class="hamburger hamburger--slider" [ngClass]="isBgMenuOpen ? 'is-active' : ''" type="button"
+            (click)="toggleBgMenu()">
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+            </span>
+        </button>
+    </div>
+
+    <div class="bgmenu-menu-container">
+        <!-- bgmenu-item-active - use this class to denote btn selection -->
+        <div class="bgmenu-item" (click)="navToHomePage(); toggleBgMenu()">
+            <p>Home</p>
+        </div>
+        <div class="bgmenu-item">
+            <p>History</p>
+        </div>
+        <div class="bgmenu-item">
+            <p>Compact View</p>
+        </div>
+        <div class="bgmenu-item">
+            <p>Logout</p>
         </div>
     </div>
 </div>

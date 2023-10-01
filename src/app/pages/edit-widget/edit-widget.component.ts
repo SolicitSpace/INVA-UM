@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,19 +7,25 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, liveQuery } from 'dexie';
-import { db, WidgetPriorityM } from '../../data/db';
+import { db, WidgetDataM, WidgetPriorityM, WidgetStatusM } from '../../data/db';
 import * as moment from 'moment';
+import { SelectedWidgetService } from '../../services/selected-widget.service';
 
 @Component({
-  selector: 'app-create-new',
-  templateUrl: './create-new.component.html',
-  styleUrls: ['./create-new.component.scss'],
+  selector: 'app-edit-widget',
+  templateUrl: './edit-widget.component.html',
+  styleUrls: ['./edit-widget.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush, // to prevent calling the isFormValid method periodically
 })
-export class CreateNewComponent {
+export class EditWidgetComponent implements OnInit {
+  widgetData: WidgetDataM = this.selectedWidgetService.getWidgetData();
+
   // contains only the types of widgets
   widgetPriorityList$: Observable<WidgetPriorityM[]> = liveQuery(() =>
     db.widgetPriority.toArray()
+  );
+  widgetStatusList$: Observable<WidgetStatusM[]> = liveQuery(() =>
+    db.widgetStatus.toArray()
   );
   // widgetTypeList$: Observable<WidgetTypeM[]> = liveQuery(() =>
   //   db.widgetType.toArray()
@@ -32,11 +38,13 @@ export class CreateNewComponent {
       priorityId: [1, Validators.required],
       isHighlighted: [false],
       color: [''],
+      statusId: [1, Validators.required]
     },
     {
       validators: [this.customValidator],
     }
   );
+
   clicked() {
     console.log(this.widgetFormGroup.value);
   }
@@ -57,7 +65,27 @@ export class CreateNewComponent {
     return null;
   }
 
-  constructor(private router: Router, private fb: FormBuilder) {}
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private selectedWidgetService: SelectedWidgetService
+  ) {}
+  ngOnInit(): void {
+    console.log('widgetData : ', this.widgetData);
+
+    this.setWidgetCurrentValues();
+  }
+
+  setWidgetCurrentValues() {
+    this.widgetFormGroup.patchValue({
+      detail: this.widgetData.detail,
+      targetDate: moment(this.widgetData.target_date).format('yyyy-MM-DD'),
+      priorityId: this.widgetData.priority_id,
+      isHighlighted: this.widgetData.is_highlighted,
+      color: this.widgetData.color,
+      statusId: this.widgetData.status
+    });
+  }
 
   cancelAndBack() {
     // clearing the fields
@@ -65,31 +93,34 @@ export class CreateNewComponent {
     this.router.navigate(['home']);
   }
 
-  async createWidget() {
+  async updateWidget() {
     //
     console.log(this.widgetFormGroup);
+
+    if (!this.widgetData.id) {
+      alert('Invalid Widget!');
+      return;
+    }
     await db.widgetData
-      .add({
+      .update(this.widgetData.id, {
         // type: parseInt(this.widgetFormGroup.value.widgetType),
         priority_id: this.widgetFormGroup.value.priorityId,
         detail: this.widgetFormGroup.value.detail,
         target_date: this.widgetFormGroup.value.targetDate,
-        status: 1, // marking status as ongoing
-        performed_on: [],
+        status: this.widgetFormGroup.value.statusId, // marking status as ongoing
         color: this.widgetFormGroup.value.color,
         is_highlighted: this.widgetFormGroup.value.isHighlighted,
         created_on: moment().format(),
         last_edited_on: moment().format(),
       })
       .then(() => {
-        alert(`Widget was created successfully. \nKeep it up!`);
+        alert(`Widget was updated successfully.`);
         this.widgetFormGroup.reset({
           widgetType: '',
           detail: '',
           targetDate: '',
         });
-        this.router.navigate(['home']);
-
+        this.router.navigate(['widget-details']);
       })
       .catch((err) => {
         throw err;

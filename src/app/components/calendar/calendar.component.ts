@@ -1,201 +1,160 @@
 import {
   Component,
-  ViewChild,
-  TemplateRef,
-  OnInit,
   Input,
+  OnInit,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
-
-import { Subject } from 'rxjs';
-
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
-import { EventColor } from 'calendar-utils';
-
-const colors: Record<string, EventColor> = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
-};
-
+import * as moment from 'moment';
+import { calendarDayT } from '../../data/types';
+import { WidgetDataM } from 'src/app/data/db';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarComponent {
-  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
+export class CalendarComponent implements OnInit {
+  createdOn: string = 'NA';
+  currDate: string = 'NA';
+  targetDate: string = 'NA';
 
-  view: CalendarView = CalendarView.Month;
+  // Need to work on this
+  // Will loop in through it
+  @Input() widgetsData: WidgetDataM[] = [];
 
-  CalendarView = CalendarView;
+  @Output() updatePerformedOnEvt = new EventEmitter<calendarDayT>();
 
-  viewDate: Date = new Date();
-
-  modalData!: {
-    action: string;
-    event: CalendarEvent;
-  };
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
+  // notes
+  headerLabels: string[] = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
   ];
+  days: calendarDayT[] = [];
+  preLimit: number = 0;
+  postLimit: number = 0;
 
-  refresh = new Subject<void>();
+  // for debug purposes
+  // currSelTimestamp: any = moment("09/2023", "MM/YYYY")
+  currSelTimestamp: any = moment();
+  currSelMonth: any = this.currSelTimestamp.format('MM/YYYY');
 
-  @Input() events: CalendarEvent[] = []
-  // events: CalendarEvent[] = [
-  //   {
-  //     start: subDays(startOfDay(new Date()), 1),
-  //     end: addDays(new Date(), 1),
-  //     title: 'A 3 day event',
-  //     color: { ...colors['red'] },
-  //     actions: this.actions,
-  //     allDay: true,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true,
-  //     },
-  //     draggable: true,
-  //   },
-  //   {
-  //     start: startOfDay(new Date()),
-  //     title: 'An event with no end date',
-  //     color: { ...colors['yellow'] },
-  //     actions: this.actions,
-  //   },
-  //   {
-  //     start: subDays(endOfMonth(new Date()), 3),
-  //     end: addDays(endOfMonth(new Date()), 3),
-  //     title: 'A long event that spans 2 months',
-  //     color: { ...colors['blue'] },
-  //     allDay: true,
-  //   },
-  //   {
-  //     start: addHours(startOfDay(new Date()), 2),
-  //     end: addHours(new Date(), 2),
-  //     title: 'A draggable and resizable event',
-  //     color: { ...colors['yellow'] },
-  //     actions: this.actions,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true,
-  //     },
-  //     draggable: true,
-  //   },
-  // ];
+  constructor(private cdRef: ChangeDetectorRef) {}
 
-  activeDayIsOpen: boolean = true;
-
-  constructor() {}
   ngOnInit(): void {
-    console.log("=> ", this.events);
-    
+    this.formatStartAndEndDates();
+
+    this.currDate = this.currSelTimestamp.format('DD-MM-YYYY');
+
+    this.generateCalendar();
   }
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
+  formatStartAndEndDates() {
+    this.createdOn = moment(this.widgetsData[0].created_on).format(
+      'DD-MM-yyyy'
+    );
+
+    this.targetDate = this.widgetsData[0].target_date
+      ? moment(this.widgetsData[0].target_date).format('DD-MM-yyyy')
+      : moment().format('DD-MM-yyyy');
+  }
+
+  navMonthForward() {
+    this.currSelTimestamp = this.currSelTimestamp.add(1, 'month');
+    this.generateCalendar();
+  }
+
+  navMonthBack() {
+    this.currSelTimestamp = this.currSelTimestamp.subtract(1, 'month');
+    this.generateCalendar();
+  }
+
+  generateCalendar() {
+    // resetting the days inside on calendar month view
+    this.days = [];
+
+    // updating the current selected month
+    this.currSelMonth = this.currSelTimestamp.format('MMMM YYYY');
+    for (let i = 1; i <= this.currSelTimestamp.daysInMonth(); i++) {
+      const timeStamp = moment(
+        `${this.getFormattedDigits(i, 2)}-${this.currSelTimestamp.format(
+          'MM'
+        )}-${this.currSelTimestamp.format('YYYY')}`,
+        'DD-MM-YYYY'
+      );
+
+      this.days.push({
+        timestamp: timeStamp,
+        dayOfMonth: timeStamp.format('DD'),
+        date: timeStamp.format('DD-MM-YYYY'),
+        name: timeStamp.format('dddd'),
+        isPerfCtrlOn: false,
+      });
     }
+
+    // Setting the preceeding and succeeding empty blocks
+    this.preLimit = this.headerLabels.indexOf(this.days[0].name);
+    this.postLimit = this.headerLabels.indexOf(
+      this.days[this.days.length - 1].name
+    );
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
+  getFormattedDigits(num: number, totDigits: number) {
+    return num.toLocaleString('en-US', {
+      minimumIntegerDigits: totDigits,
+      useGrouping: false,
     });
-    this.handleEvent('Dropped or resized', event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
+  isBetweenDay(day: calendarDayT) {
+    return (
+      day.timestamp.valueOf() >=
+        moment(this.createdOn, 'DD-MM-YYYY').valueOf() &&
+      day.timestamp.valueOf() <= moment(this.targetDate, 'DD-MM-YYYY').valueOf()
+    );
+  }
+  openPerformedCtrls(index: number) {
+    this.days = this.days.map((o) => ({
+      ...o,
+      isPerfCtrlOn: false,
+    }));
+    this.days[index].isPerfCtrlOn = true;
+  }
+  setPerformedStatus(index: number, isPerformed: boolean, day: calendarDayT) {
+    day.isPerformed = isPerformed;
+    // need the parent array
+    this.updatePerformedOnEvt.emit(day);
+
+    // Close
+    this.days[index].isPerfCtrlOn = false;
+    setTimeout(() => {
+      this.cdRef.detectChanges();
+    }, 10);
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors['red'],
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
+  getDayPerformedStatus(day: calendarDayT) {
+    // console.log('day : ', day);
+    // 1st If marked
+    // 2nd If unmarked
+    //  date in future; leave it
+    //  date in past; mark as cross/skull
+    return this.widgetsData[0].performed_on?.includes(day.date)
+      ? './assets/fa/check-solid.svg'
+      : moment(day.timestamp).endOf('day').unix() > moment().unix()
+      ? ''
+      : './assets/fa/skull-solid.svg';
   }
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
-
-  setView(view: CalendarView) {
-
-    console.log("view : ", CalendarView);
-    this.view = view;
-  }
-
-  closeOpenMonthViewDay() {
-    this.activeDayIsOpen = false;
+  isPerformedBtnAllowed(day: calendarDayT) {
+    // No need of EndOF('day') since day.timestamp always contains the value from startOf('day') 00:00:00
+    return day.timestamp.unix() <= moment().unix();
   }
 }

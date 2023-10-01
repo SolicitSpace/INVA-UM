@@ -1,33 +1,66 @@
-<div class="calendar-container">
+<div class="top-section-container">
+  <button (click)="navMonthBack()">
+    <img src="./assets/fa/angle-left.svg" />
+  </button>
+  <p>{{ currSelMonth }}</p>
+  <button (click)="navMonthForward()">
+    <img src="./assets/fa/angle-left.svg" />
+  </button>
+</div>
 
-
-    <div class="calendar-nav-container">
-        <div class="top-section">
-            <button class="prev-nav" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
-                <img src="./assets/fa/angle-left.svg" />
-            </button>
-            <p class="current-disp">{{ viewDate | calendarDate : view + 'ViewTitle' : 'en' }}</p>
-
-            <button class="next-nav" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()">
-                <img src="./assets/fa/angle-left.svg" style="transform: scale(-1);" /></button>
-        </div>
+<div class="calendar-grid-container">
+  <ng-container *ngFor="let lbl of headerLabels">
+    <div class="header day-container">
+      <p>{{ lbl }}</p>
     </div>
-    <br />
-    <div [ngSwitch]="view">
-        <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
-            [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-            (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-        </mwl-calendar-month-view>
-        <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-            (eventTimesChanged)="eventTimesChanged($event)">
-        </mwl-calendar-week-view>
-        <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
-            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-            (eventTimesChanged)="eventTimesChanged($event)">
-        </mwl-calendar-day-view>
+  </ng-container>
+
+  <ng-container *ngFor="let day of headerLabels | slice : 0 : preLimit">
+    <div class="empty-cells day-container">
+      <p>NA</p>
+    </div>
+  </ng-container>
+
+  <ng-container *ngFor="let day of days; index as i">
+    <!-- Day inside the Timeline range -->
+    <div *ngIf="isBetweenDay(day); else ExternalDay" class="day-cells day-container between-day" [ngClass]="{
+        'curr-day': day.date === currDate,
+        'created-day': day.date === createdOn,
+        'target-day': day.date === targetDate
+      }">
+      <!-- <button (click)="openPerformedCtrls(i)" [disabled]="managePerformedBtnState(day)"></button> -->
+      <button (click)="openPerformedCtrls(i)" *ngIf="isPerformedBtnAllowed(day)"></button>
+      <p>{{ day.dayOfMonth }}</p>
+      <div class="isPerformed-container">
+        <img [src]="getDayPerformedStatus(day)" />
+
+
+        <!-- <img src="./assets/fa/check-solid.svg" /> -->
+        <!-- <img src="./assets/fa/skull-solid.svg" /> -->
+        <!-- <img src="./assets/fa/xmark-solid.svg" /> -->
+      </div>
+
+      <div class="performed-ctrls-container" *ngIf="day.isPerfCtrlOn">
+        <button (click)="setPerformedStatus(i, false, day)">
+          <img src="./assets/fa/xmark-solid.svg" />
+        </button>
+        <button (click)="setPerformedStatus(i, true, day)">
+          <img src="./assets/fa/check-solid.svg" />
+        </button>
+      </div>
     </div>
 
+    <!-- Day outside the Timeline range -->
+    <ng-template #ExternalDay>
+      <div class="day-cells day-container">
+        <p>{{ day.dayOfMonth }}</p>
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <ng-container *ngFor="let day of headerLabels | slice : postLimit : 6">
+    <div class="empty-cells day-container">
+      <p>NA</p>
+    </div>
+  </ng-container>
 </div>

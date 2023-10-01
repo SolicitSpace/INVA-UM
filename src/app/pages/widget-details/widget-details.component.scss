@@ -1,12 +1,88 @@
 @import "./../../../styles.scss";
 
-.page-title {
-  font-size: $title-txt-1;
-  font-weight: 600;
+.details-panel-container {
+  position: relative;
+  // padding: 1%;
+}
+
+.details-ops-container {
+  position: absolute;
+  right: 1%;
+  background-color: white;
+  border: solid 1px;
+  z-index: 12;
+  overflow: hidden;
+  width: 6vw;
+  opacity: 0;
+  transform: translateY(-10%);
+  animation: revealDetailsOps 0.1s ease-in forwards;
+  .details-ops {
+    position: relative;
+    padding: 1%;
+    cursor: pointer;
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+    &:active {
+      transform: scale(0.98);
+    }
+
+    p {
+      font-size: 1.4vw;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+
+  @keyframes revealDetailsOps {
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+}
+
+.details-header-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: 5vw;
+
+  .page-title {
+    display: flex;
+    align-items: center;
+    p {
+      font-size: $title-txt-1;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+  .menu-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 1%;
+    border-radius: 50%;
+    cursor: pointer;
+    img {
+      position: relative;
+      object-fit: contain;
+      height: 60%;
+      width: auto;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+    &:active {
+      transform: scale(0.98);
+    }
+  }
 }
 
 .details-container {
-    display: flex;
+  display: flex;
   .info-container {
     position: relative;
     flex-basis: 45%;
@@ -30,8 +106,8 @@
     position: relative;
     flex-basis: 65%;
     app-calendar {
-        display: block;
-        border: solid 1px lightgrey;
+      display: block;
+      border: solid 1px lightgrey;
     }
   }
 }

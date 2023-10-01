@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header-bar.component.scss'],
 })
 export class HeaderBarComponent {
+  
   constructor(private global: GlobalService, private router: Router) {}
 
   onLogout() {
@@ -16,5 +17,10 @@ export class HeaderBarComponent {
 
   navToHomePage() {
     this.router.navigate(['home']);
+  }
+
+  isBgMenuOpen: boolean = false;
+  toggleBgMenu() {
+    this.isBgMenuOpen = !this.isBgMenuOpen
   }
 }
