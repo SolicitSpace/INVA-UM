@@ -14,6 +14,7 @@ export class WidgetComponent {
 
   detail: string = 'NA';
   timeVal: number = 0;
+  lastPerformedOnDaysAgo: string = '0 days ago';
 
   constructor(
     private router: Router,
@@ -23,10 +24,19 @@ export class WidgetComponent {
   ngOnInit(): void {
     this.detail = this.widgetData.detail;
 
+    this.setLastPerformedOnDaysAgo();
+
     // if no target date is set then count the number of dayys from creation
     if (this.widgetData.target_date == '') this.setDaysPassed();
     else this.setDaysPending();
+  }
 
+  setLastPerformedOnDaysAgo() {
+    if (this.widgetData.performed_on.length > 0)
+      this.lastPerformedOnDaysAgo = moment(
+        this.widgetData.performed_on[this.widgetData.performed_on.length - 1],
+        'DD-MM-yyyy'
+      ).fromNow();
   }
 
   setDaysPassed() {
@@ -40,7 +50,7 @@ export class WidgetComponent {
     const val = moment(this.widgetData.target_date, 'YYYY-MM-DD').diff(
       moment()
     );
-    
+
     this.timeVal = Math.ceil(moment.duration(val).asDays());
   }
 

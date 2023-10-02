@@ -32,6 +32,7 @@ export interface WidgetDataM {
   is_highlighted: boolean;
   color: string;
   created_on: string;
+  streak: number;
   last_edited_on: string;
 }
 
@@ -110,7 +111,7 @@ export class AppDB extends Dexie {
     // let performedOn = [];
 
     let createdOnDate, targetDate;
-    const lim = 5
+    const lim = 5;
     for (let i = 1; i < lim; i++) {
       // performedOn.push(1693022081 + i);
 
@@ -129,6 +130,7 @@ export class AppDB extends Dexie {
         performed_on: [],
         priority_id: this.getRandomInt(1, 4),
         is_highlighted: true,
+        streak: this.getRandomInt(1, 4),
         color: '#000000',
         created_on: createdOnDate,
         target_date: targetDate,
@@ -154,6 +156,7 @@ export class AppDB extends Dexie {
         priority_id: 1,
         is_highlighted: true,
         color: 'yellow',
+        streak: 0,
         created_on: 'string',
         last_edited_on: 'string',
       });

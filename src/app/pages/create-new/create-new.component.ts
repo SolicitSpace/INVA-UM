@@ -76,6 +76,7 @@ export class CreateNewComponent {
         target_date: this.widgetFormGroup.value.targetDate,
         status: 1, // marking status as ongoing
         performed_on: [],
+        streak: 0,
         color: this.widgetFormGroup.value.color,
         is_highlighted: this.widgetFormGroup.value.isHighlighted,
         created_on: moment().format(),
