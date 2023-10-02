@@ -27,7 +27,7 @@ export interface WidgetDataM {
   detail: string;
   target_date?: string;
   status: number;
-  performed_on?: string[];
+  performed_on: string[];
   priority_id: number;
   is_highlighted: boolean;
   color: string;
