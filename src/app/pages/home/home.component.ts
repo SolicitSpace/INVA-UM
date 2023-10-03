@@ -81,8 +81,9 @@ export class HomeComponent implements OnInit {
   }
 
   async updateStreaks() {
-    for (let i = 0; i < this.ongoingWidgetList.length - 1; i++) {
+    for (let i = 0, lim = this.ongoingWidgetList.length; i < lim; i++) {
       const widgetData = this.ongoingWidgetList[i];
+      console.log(widgetData.detail);
 
       if (!widgetData.id) continue;
 
@@ -113,8 +114,8 @@ export class HomeComponent implements OnInit {
       // if no mark as zero streaks
       else streakCounter = 0;
 
-      console.log("streakCounter", streakCounter);
-      
+      console.log('streakCounter', streakCounter);
+
       // update the value here to db
       await db.widgetData.update(widgetData.id, {
         streak: streakCounter,
