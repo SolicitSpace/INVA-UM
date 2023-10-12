@@ -19,12 +19,24 @@ export class HomeComponent implements OnInit {
 
   // contains only ongoing widget list
   ongoingWidgetList!: WidgetDataM[];
-
+  ongoingWidgetList_div1 !: WidgetDataM[];
+  ongoingWidgetList_div2 !: WidgetDataM[];
   constructor(private router: Router) {}
 
   ngOnInit() {
     this.widgetDataList$.subscribe((res) => {
       this.ongoingWidgetList = _.filter(res, { status: 1 });
+
+
+
+      console.log(this.ongoingWidgetList, this.ongoingWidgetList.length);
+
+      let finish = Math.ceil(this.ongoingWidgetList.length / 2)
+      this.ongoingWidgetList_div1 = this.ongoingWidgetList.slice(0, finish)
+      this.ongoingWidgetList_div2 = this.ongoingWidgetList.slice(finish, this.ongoingWidgetList.length)
+      console.log("first : ", this.ongoingWidgetList_div1);
+      console.log("ongoingWidgetList_div2 : ", this.ongoingWidgetList_div2);
+      
 
       this.updateStreaks();
     });
@@ -114,7 +126,6 @@ export class HomeComponent implements OnInit {
       // if no mark as zero streaks
       else streakCounter = 0;
 
-      console.log('streakCounter', streakCounter);
 
       // update the value here to db
       await db.widgetData.update(widgetData.id, {
