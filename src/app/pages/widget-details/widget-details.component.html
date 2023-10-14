@@ -19,32 +19,35 @@
 
 
   <div class="details-container">
-    <div class="info-container">
-      <div class="label-container">
+    <div class="info-containers">
+      <div class="info-container">
         <p>Name:</p>
         <p>{{ widgetData.detail }}</p>
+        <!-- <textarea disabled>{{ widgetData.detail }}</textarea> -->
+        <!-- <div>{{ widgetData.detail }}</div> -->
+        <!-- <p [innerHTML]="widgetData.detail"></p> -->
       </div>
-      <div class="label-container">
+      <div class="info-container">
         <p>Type:</p>
         <p>{{ widgetData.target_date ? 'Countdown' : 'Countup' }}</p>
       </div>
-      <div class="label-container" *ngIf="widgetData.target_date">
+      <div class="info-container" *ngIf="widgetData.target_date">
         <p>Target Date:</p>
         <p>{{ widgetData.target_date }}</p>
       </div>
-      <div class="label-container">
+      <div class="info-container">
         <p>Time Remaining:</p>
         <p>{{ timeRemaining }}</p>
       </div>
-      <div class="label-container">
+      <div class="info-container">
         <p>Status:</p>
         <p>{{ this.statusVal }}</p>
       </div>
-      <div class="label-container">
+      <div class="info-container">
         <p>Priority:</p>
         <p>{{ priorityVal }}</p>
       </div>
-      <div class="label-container">
+      <div class="info-container">
         <p>Created On:</p>
         <p>{{ createdOn }}</p>
       </div>

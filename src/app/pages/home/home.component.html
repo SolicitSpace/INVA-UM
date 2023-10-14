@@ -1,50 +1,24 @@
-
-
 <div class="main-timer-container">
     <app-main-timer></app-main-timer>
 </div>
 
 <div class="widget-container">
+    <ng-container *ngFor="let widget of ongoingWidgetList">
+        <app-widget [widgetData]="widget"></app-widget>
+    </ng-container>
+    <app-create-new-widget></app-create-new-widget>
+</div>
+<!-- <div class="widget-container">
 
-    <!-- <div class="row-container">
-        <app-countdown-widget></app-countdown-widget>
-        <app-countdown-widget></app-countdown-widget>
-        <app-countup-widget></app-countup-widget>
-        <app-last-performed-on-widget></app-last-performed-on-widget>
-    </div> -->
-    <!-- <div class="row-container">
-        <app-countup-widget></app-countup-widget>
-        <app-countdown-widget></app-countdown-widget>
-        <app-countup-widget></app-countup-widget>
-        <app-countdown-widget></app-countdown-widget>
-    </div>
-    <div class="row-container">
-        <app-countup-widget></app-countup-widget>
-        <app-last-performed-on-widget></app-last-performed-on-widget>
-        <app-countup-widget></app-countup-widget>
-        <app-countdown-widget></app-countdown-widget>
-    </div>
-    <div class="row-container">
-        <app-countdown-widget></app-countdown-widget>
-        <app-last-performed-on-widget></app-last-performed-on-widget>
-        <app-countup-widget></app-countup-widget>
-        <app-countdown-widget></app-countdown-widget>
-    </div> -->
     <div class="row-container">
         <ng-container *ngFor="let widget of ongoingWidgetList_div1">
             <app-widget [widgetData]="widget"></app-widget>
         </ng-container>
-        <!-- <app-create-new-widget ></app-create-new-widget> -->
     </div>
     <div class="row-container">
         <ng-container *ngFor="let widget of ongoingWidgetList_div2">
             <app-widget [widgetData]="widget"></app-widget>
         </ng-container>
     </div>
-    <app-create-new-widget ></app-create-new-widget>
-
-
-
-
-
-</div>
+    <app-create-new-widget></app-create-new-widget>
+</div> -->
