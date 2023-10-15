@@ -2,13 +2,16 @@
     <app-main-timer></app-main-timer>
 </div>
 
-<div class="widget-container">
+<!-- complete grid based -->
+<!-- <div class="widget-container">
     <ng-container *ngFor="let widget of ongoingWidgetList">
         <app-widget [widgetData]="widget"></app-widget>
     </ng-container>
     <app-create-new-widget></app-create-new-widget>
-</div>
-<!-- <div class="widget-container">
+</div> -->
+
+<!-- grid + flex based -->
+<div class="widget-container">
 
     <div class="row-container">
         <ng-container *ngFor="let widget of ongoingWidgetList_div1">
@@ -21,4 +24,4 @@
         </ng-container>
     </div>
     <app-create-new-widget></app-create-new-widget>
-</div> -->
+</div>

@@ -84,6 +84,7 @@
 
 .details-container {
   display: flex;
+  flex-direction: column;
   .info-containers {
     position: relative;
     flex-basis: 45%;
