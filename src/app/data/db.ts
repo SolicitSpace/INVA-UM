@@ -64,7 +64,8 @@ export class AppDB extends Dexie {
     // Populating `Widget Priority` Table data
     this.generateWidgetPriorityTable();
 
-    this.generateWidgetTableDebug();
+    // only for debug
+    // this.generateWidgetTableDebug();
 
     // this.stressTestWidgetTable();
 
