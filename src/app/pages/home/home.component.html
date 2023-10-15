@@ -1,48 +1,27 @@
-
-
 <div class="main-timer-container">
     <app-main-timer></app-main-timer>
 </div>
 
+<!-- complete grid based -->
+<!-- <div class="widget-container">
+    <ng-container *ngFor="let widget of ongoingWidgetList">
+        <app-widget [widgetData]="widget"></app-widget>
+    </ng-container>
+    <app-create-new-widget></app-create-new-widget>
+</div> -->
+
+<!-- grid + flex based -->
 <div class="widget-container">
 
-    <!-- <div class="row-container">
-        <app-countdown-widget></app-countdown-widget>
-        <app-countdown-widget></app-countdown-widget>
-        <app-countup-widget></app-countup-widget>
-        <app-last-performed-on-widget></app-last-performed-on-widget>
-    </div> -->
-    <!-- <div class="row-container">
-        <app-countup-widget></app-countup-widget>
-        <app-countdown-widget></app-countdown-widget>
-        <app-countup-widget></app-countup-widget>
-        <app-countdown-widget></app-countdown-widget>
-    </div>
     <div class="row-container">
-        <app-countup-widget></app-countup-widget>
-        <app-last-performed-on-widget></app-last-performed-on-widget>
-        <app-countup-widget></app-countup-widget>
-        <app-countdown-widget></app-countdown-widget>
-    </div>
-    <div class="row-container">
-        <app-countdown-widget></app-countdown-widget>
-        <app-last-performed-on-widget></app-last-performed-on-widget>
-        <app-countup-widget></app-countup-widget>
-        <app-countdown-widget></app-countdown-widget>
-    </div> -->
-    <div class="row-container">
-        <ng-container *ngFor="let widget of ongoingWidgetList">
-            <!-- <app-countdown-widget [widgetData]="widget" *ngIf="widget.type == 1" ></app-countdown-widget>
-            <app-countup-widget [widgetData]="widget" *ngIf="widget.type == 2"></app-countup-widget>
-            <app-last-performed-on-widget [widgetData]="widget" *ngIf="widget.type == 3"></app-last-performed-on-widget> -->
-
+        <ng-container *ngFor="let widget of ongoingWidgetList_div1">
             <app-widget [widgetData]="widget"></app-widget>
         </ng-container>
-        <app-create-new-widget ></app-create-new-widget>
     </div>
-
-
-
-
-
+    <div class="row-container">
+        <ng-container *ngFor="let widget of ongoingWidgetList_div2">
+            <app-widget [widgetData]="widget"></app-widget>
+        </ng-container>
+    </div>
+    <app-create-new-widget></app-create-new-widget>
 </div>

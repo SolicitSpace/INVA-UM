@@ -32,6 +32,7 @@
       font-size: 1.4vw;
       font-weight: 600;
       text-align: center;
+      
     }
   }
 
@@ -83,10 +84,11 @@
 
 .details-container {
   display: flex;
-  .info-container {
+  flex-direction: column;
+  .info-containers {
     position: relative;
     flex-basis: 45%;
-    .label-container {
+    .info-container {
       margin: 1% 0;
 
       p:nth-child(1) {
@@ -98,6 +100,8 @@
         font-size: $value-txt;
         font-weight: 400;
         margin: 0;
+        white-space: break-spaces;
+        padding: 0.5% 4% 0;
       }
     }
   }

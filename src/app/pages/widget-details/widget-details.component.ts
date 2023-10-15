@@ -11,6 +11,7 @@ import {
 import * as moment from 'moment';
 import { calendarDayT } from 'src/app/data/types';
 import { Observable, liveQuery } from 'dexie';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-widget-details',
@@ -30,12 +31,13 @@ export class WidgetDetailsComponent implements OnInit {
   statusVal: string = 'NA';
   priorityVal: string = 'NA';
   timeRemaining: string = 'NA';
-  createdOn: string = "NA"
+  createdOn: string = 'NA';
   isShowDetailOps: boolean = false;
 
   constructor(
     private selectedWidgetService: SelectedWidgetService,
-    private router: Router
+    private router: Router,
+    private global: GlobalService
   ) {}
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class WidgetDetailsComponent implements OnInit {
     this.setValueForStatus();
     this.setValueForPriority();
     // this.setValueForType();
-    this.createdOn = moment(this.widgetData.created_on).format("DD-MM-yyyy")
+    this.createdOn = moment(this.widgetData.created_on).format('DD-MM-yyyy');
 
     this.setUpCalendarEvt();
 
@@ -136,12 +138,14 @@ export class WidgetDetailsComponent implements OnInit {
       // If the date is already entered then don't add again
       if (this.widgetData.performed_on?.includes(day.date)) {
         console.log('Day already marked.');
-
         return;
       }
 
-      // add the date in the array
-      this.widgetData.performed_on?.push(day.date);
+      // Set Performed_on & update the widgetData
+      this.widgetData = this.global.setPerformedOnDate(
+        this.widgetData,
+        day.date
+      );
     } else {
       // check if the arr consist the element
       if (!this.widgetData.performed_on?.includes(day.date)) {
@@ -149,8 +153,10 @@ export class WidgetDetailsComponent implements OnInit {
         return;
       }
       // remove the date from array
-      const index: number = this.widgetData.performed_on.indexOf(day.date);
-      this.widgetData.performed_on?.splice(index, 1);
+      this.widgetData = this.global.removePerformedOnDate(
+        this.widgetData,
+        day.date
+      );
     }
 
     // update in the db

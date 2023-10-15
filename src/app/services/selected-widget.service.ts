@@ -17,6 +17,7 @@ export class SelectedWidgetService {
     is_highlighted: false,
     color: "#000000",
     created_on: "NA",
+    streak: 0,
     last_edited_on: "NA",
   };;
 
