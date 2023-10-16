@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, liveQuery } from 'dexie';
 // import { db, WidgetDataM, WidgetTypeM } from '../../data/db';
-import { db, WidgetDataM, WidgetPriorityM } from '../../data/db';
+import { db, WidgetDataM } from '../../data/db';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 

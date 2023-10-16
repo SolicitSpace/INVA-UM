@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { WidgetDataM } from '../data/db';
+import { db, WidgetDataM } from '../data/db';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +10,18 @@ export class GlobalService {
   constructor(private router: Router) {}
 
   onLogout() {
-    localStorage.clear();
-    this.router.navigate(['entry']);
+    db.delete()
+      .then(() => {
+        console.log('Database successfully deleted');
+      })
+      .catch((err: any) => {
+        console.error('Could not delete database');
+      })
+      .finally(() => {
+        // Do what should be done next...
+        localStorage.clear();
+        this.router.navigate(['entry']);
+      });
   }
 
   /**

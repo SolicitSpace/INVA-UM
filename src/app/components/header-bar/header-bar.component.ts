@@ -8,11 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./header-bar.component.scss'],
 })
 export class HeaderBarComponent {
-  
   constructor(private global: GlobalService, private router: Router) {}
 
   onLogout() {
-    this.global.onLogout();
+    if (
+      confirm(
+        `Are you sure you want to logout? \nWarning: This will wipe all your data!`
+      )
+    )
+      this.global.onLogout();
   }
 
   navToHomePage() {
@@ -21,6 +25,6 @@ export class HeaderBarComponent {
 
   isBgMenuOpen: boolean = false;
   toggleBgMenu() {
-    this.isBgMenuOpen = !this.isBgMenuOpen
+    this.isBgMenuOpen = !this.isBgMenuOpen;
   }
 }
